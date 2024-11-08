@@ -1,0 +1,31 @@
+------------------------------Overall Properties----------------------------------------------
+1		!Case 0 = Fixed Source, 1 = Eigenvalue
+3		!Materials
+1		!Groups
+0		!Angles
+0		!Anisotropy 0 to 10
+0		!Geometry 0 = Slab, 1 = Cylindrical, 2 = Spherical
+0		!Adjoint? 0 = No, 1 = Yes
+------------------------------Boundary Conditions---------------------------------------------
+1		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 4 = Periodic
+2		!RBC
+2		!TBC
+1		!BBC
+1		!FBC
+1		!BaBC
+0.0		!alpha
+6.0		!Q Source
+------------------------------Chi Values------------------------------
+1.0
+------------------------------Material 1 Properties-------------------
+1.5		!Sigma_a for each group
+0.0		!nu*Sigma_f
+0.0		!Sigma_s matrix
+------------------------------Material 2 Properties-------------------
+0.062158	!Sigma_a for each group
+0.05		!nu*Sigma_f
+0.089303	!Sigma_s matrix
+------------------------------Material 3 Properties-------------------
+0.049591	!Sigma_a for each group
+0.0		!nu*Sigma_f
+0.099343	!Sigma_s matrix

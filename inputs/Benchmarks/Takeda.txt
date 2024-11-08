@@ -1,0 +1,39 @@
+------------------------------Overall Properties----------------------------------------------
+1		!Case 0 = Fixed Source, 1 = Eigenvalue
+4		!Materials
+2		!Groups
+0		!Angles
+0		!Anisotropy 0 to 3
+0		!Geometry
+0		!Adjoint? 0 = No, 1 = Yes
+------------------------------Boundary Conditions---------------------------------------------
+1		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 4 = Periodic
+2		!RBC
+2		!TBC
+1		!BBC
+1		!FBC
+2		!BaBC
+0.5		!alpha
+6.0		!Q Source
+------------------------------Chi Values------------------------------
+1.0 0.0
+------------------------------Core Material Properties--------------------------
+0.00852709 0.158196	!Sigma_a for each group
+0.00909319 0.290183	!nu*Sigma_f
+0.192423   0.0228253	!Sigma_s matrix
+0.0        0.880439
+------------------------------Control Rod Material Properties-------------------
+0.0174439    0.182224		!Sigma_a for each group
+0.0          0.0		!nu*Sigma_f
+0.0677241    0.0000645461	!Sigma_s matrix
+0.0          0.0352358
+------------------------------Reflector Material Properties---------------------
+0.000416391 0.0202999	!Sigma_a for each group
+0.0 	    0.0		!nu*Sigma_f
+0.193446    0.0565042	!Sigma_s matrix
+0.0         1.62452
+------------------------------Void Material Properties--------------------------
+0.0000465132 0.00132890		!Sigma_a for each group
+0.0          0.0		!nu*Sigma_f
+0.0127700    0.0000240997	!Sigma_s matrix
+0.0          0.0107387

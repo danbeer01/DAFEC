@@ -1,0 +1,1 @@
+/usr/bin/f95  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  CMakeFiles/out.dir/2D_NDE_Fission_Multi.f90.o -o /home/daniel/Documents/PhD_Diffusion/out  -Wl,-rpath,/usr/lib/petscdir/petsc3.15/x86_64-linux-gnu-real/lib libsrc.a /usr/lib/petscdir/petsc3.15/x86_64-linux-gnu-real/lib/libpetsc_real.so 

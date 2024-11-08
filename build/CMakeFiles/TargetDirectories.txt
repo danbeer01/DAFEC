@@ -1,0 +1,4 @@
+/home/daniel/Documents/DAFEC/build/CMakeFiles/src.dir
+/home/daniel/Documents/DAFEC/build/CMakeFiles/out.dir
+/home/daniel/Documents/DAFEC/build/CMakeFiles/edit_cache.dir
+/home/daniel/Documents/DAFEC/build/CMakeFiles/rebuild_cache.dir
