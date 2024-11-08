@@ -42,11 +42,11 @@ call timer%start_timer()
 call timer%Startdate()
 
 ! Open VTK file
-open(unit=1, file='vtk/1D/O1_line_3.vtk', status='old', action='read')
+! open(unit=1, file='vtk/1D/O1_line_3.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/reed_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/3_Region_Sphere.vtk', status='old', action='read')
 
-! open(unit=1, file='vtk/2D/Sqaures2.vtk', status='old', action='read')
+open(unit=1, file='vtk/2D/Sqaures2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Squares_3.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Tri_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/quad.vtk', status='old', action='read')
@@ -67,6 +67,7 @@ open(unit=1, file='vtk/1D/O1_line_3.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/mixed_mesh.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/quad_linear.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/C5G7.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/Curvilinear.vtk', status='old', action='read')
 
 ! open(unit=1, file='vtk/3D/Cube_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/O1_cube.vtk', status='old', action='read')

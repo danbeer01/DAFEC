@@ -54,6 +54,16 @@ contains
 
         logical :: solve = .true.
 
+        write(*, '(A)') "*******************************"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A, A, A)') "*       ", "TRANSPORT SOLVE ", "      *"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A)') "*******************************"
+
         ! Allocate memory for the flux array
         allocate(Results%Angular_Flux(N%Group,N%N,N%Ordinates))
         allocate(Results%Scalar_Flux(N%Group,N%N))

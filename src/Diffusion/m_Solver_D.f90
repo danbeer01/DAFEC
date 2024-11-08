@@ -39,6 +39,16 @@ contains
         integer, dimension(:,:), allocatable        :: Periodic_Pairs
 
         integer :: i, g_index
+
+        write(*, '(A)') "*******************************"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A, A, A)') "*       ", "DIFFUSION SOLVE ", "      *"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A)') "*******************************"
         
         ! Allocate memory for the flux array
         allocate(Results%Flux(N%Group,N%N))

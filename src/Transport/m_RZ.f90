@@ -47,7 +47,15 @@ module m_RZ
         integer                             :: max_iter = 10000 ! maximum number of iterations
         real(kind = 8)                      :: tol = 1.0e-6 ! tolerance for convergence
 
-        print *, "WARNING: RZ CODE IS SHIT"
+        write(*, '(A)') "*******************************"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A, A, A)') "*  ", "WARNING: RZ CODE IS SHIT ", "  *"
+
+        write(*, '(A)') "*                             *"
+
+        write(*, '(A)') "*******************************"
         
         call Calculate_mu(mu)
 
