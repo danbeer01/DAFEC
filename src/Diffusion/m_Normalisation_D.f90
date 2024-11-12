@@ -68,11 +68,11 @@ contains
 
         do k = 1,N%Group
 
-            if (Properties%Adjoint == 0) then
+            if (.not. Properties%Adjoint) then
 
                 Norm = Norm + (1.0_8/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*Element_Flux(k,i)*Properties%Elements(i)%Volume
 
-            else if (Properties%Adjoint == 1) then
+            else if (Properties%Adjoint) then
 
                 Norm = Norm + Element_Flux(k,i)*Properties%Elements(i)%Volume
 

@@ -55,7 +55,7 @@ end type ElementTypeD
 
 type :: PropertiesTypeD
     integer :: LBC,RBC,TBC,BBC,FBC,BaBC
-    integer :: Adjoint
+    logical :: Adjoint
     integer :: Case
     integer :: g
     real(kind = 8) :: alpha, Q_s
@@ -75,7 +75,7 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
     class(PropertiesTypeD), intent(inout) :: Properties
     class(NTypeD), intent(inout)          :: N
     
-    integer :: i, j
+    integer :: i, j, adjoint
     real(kind=8), dimension(:), allocatable :: sigma_s_vector
 
     read(1,*)
@@ -85,7 +85,9 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
     read(1,*)
     read(1,*) 
     read(1,*) Properties%g
-    read(1,*) Properties%Adjoint
+    read(1,*) adjoint
+    Properties%Adjoint = .false.
+    if (adjoint == 1) Properties%Adjoint = .true.
     read(1,*) 
     read(1,*) Properties%LBC
     read(1,*) Properties%RBC
@@ -167,7 +169,7 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
 
         end do
 
-        if (Properties%Adjoint == 1) then
+        if (Properties%Adjoint) then
 
             Properties%Materials(i)%Sigma_s = TRANSPOSE(Properties%Materials(i)%Sigma_s)
 

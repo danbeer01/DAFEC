@@ -60,6 +60,8 @@ contains
 
             Properties%Elements(i)%Source = 0.0_8
 
+            Properties%Elements(i)%Flux = 1.0_8
+
         end do
 
         ! Construct the matrix
@@ -72,8 +74,6 @@ contains
         do while (ABS((lambda_new - lambda_old)/(lambda_old)) > tol)
 
             lambda_old = lambda_new
-
-            call Calculate_Element_Flux(Properties, N, Flux)
 
             call Calculate_Source(Properties, N, lambda_new, Total_Source)
 
@@ -142,15 +142,15 @@ contains
 
                     if (Properties%Case == 0) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
+                        if (.not. Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
+                        if (Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
 
                     else if (Properties%Case == 1) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index-1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
+                        if (.not. Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index-1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index) + Properties%Chi(g_s_index-1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
+                        if (Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index-1,g_index) + Properties%Chi(g_s_index-1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index-1,:))
 
                     end if
 
@@ -160,15 +160,15 @@ contains
 
                     if (Properties%Case == 0) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
+                        if (.not. Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
+                        if (Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
 
                     else if (Properties%Case == 1) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index+1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
+                        if (.not. Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index+1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index) + Properties%Chi(g_s_index+1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
+                        if (Properties%Adjoint) Properties%Elements(i)%Source(g_index,:) = Properties%Elements(i)%Source(g_index,:) + (Properties%Elements(i)%Sigma_s(g_s_index+1,g_index) + Properties%Chi(g_s_index+1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(g_s_index+1,:))
 
                     end if
 
