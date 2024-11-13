@@ -60,6 +60,7 @@ type :: PropertiesTypeD
     integer :: Case
     integer :: g
     real(kind = 8) :: alpha, Q_s
+    real(kind = 8) :: Left_B, Right_B, Bottom_B, Top_B, Front_B, Back_B
     real(kind = 8), dimension(:), allocatable       :: Length
     real(kind = 8), dimension(:), allocatable       :: Chi
     real(kind = 8), dimension(:,:), allocatable     :: Isoparametric_Coordinates
@@ -120,6 +121,13 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
     do i = 1, N%D
         Properties%Length(i) = MAXVAL(this%Nodes(:,i)) - MINVAL(this%Nodes(:,i))
     end do
+
+    Properties%Left_B = MINVAL(this%Nodes(:,1))
+    Properties%Right_B = MAXVAL(this%Nodes(:,1))
+    Properties%Bottom_B = MINVAL(this%Nodes(:,2))
+    Properties%Top_B = MAXVAL(this%Nodes(:,2))
+    Properties%Front_B = MINVAL(this%Nodes(:,3))
+    Properties%Back_B = MAXVAL(this%Nodes(:,3))
 
     allocate(Properties%Elements(N%Element))
     allocate(Properties%Materials(N%Material))

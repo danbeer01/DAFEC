@@ -211,7 +211,7 @@ contains
                 Num_Gauss_Points = 7
             end if
 
-            allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,size(Properties%Length),size(Properties%Length)), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,size(Properties%Length),size(Properties%Length)), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
+            allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
             allocate(xi(Num_Gauss_Points), eta(Num_Gauss_Points), w(Num_Gauss_Points))
 
@@ -236,7 +236,7 @@ contains
 
             Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
 
-            allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,size(Properties%Length),size(Properties%Length)), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,size(Properties%Length),size(Properties%Length)), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
+            allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
             allocate(xi(Num_Gauss_Points), eta(Num_Gauss_Points), w(Num_Gauss_Points))
 

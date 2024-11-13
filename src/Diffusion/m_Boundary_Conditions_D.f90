@@ -52,11 +52,11 @@ contains
 
         do Node_index = 1, Properties%Elements(i)%Number_of_Nodes
 
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Left_B) < 1e-6) then
                 k_left = k_left + 1
                 left_node = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Length(1)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Right_B) < 1e-6) then
                 k_right = k_right + 1
                 right_node = Node_index
             end if
@@ -148,19 +148,19 @@ contains
 
         do Node_index = 1, Properties%Elements(i)%Number_of_Nodes
 
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Left_B) < 1e-6) then
                 k_left = k_left + 1
                 left_nodes(k_left) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Length(1)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Right_B) < 1e-6) then
                 k_right = k_right + 1
                 right_nodes(k_right) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Bottom_B) < 1e-6) then
                 k_bottom = k_bottom + 1
                 bottom_nodes(k_bottom) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Length(2)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Top_B) < 1e-6) then
                 k_top = k_top + 1
                 top_nodes(k_top) = Node_index
             end if
@@ -352,27 +352,27 @@ contains
 
         do Node_index = 1, Properties%Elements(i)%Number_of_Nodes
 
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Left_B) < 1e-6) then
                 k_left = k_left + 1
                 left_nodes(k_left) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Length(1)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,1) - Properties%Right_B) < 1e-6) then
                 k_right = k_right + 1
                 right_nodes(k_right) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Bottom_B) < 1e-6) then
                 k_bottom = k_bottom + 1
                 bottom_nodes(k_bottom) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Length(2)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,2) - Properties%Top_B) < 1e-6) then
                 k_top = k_top + 1
                 top_nodes(k_top) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,3) - 0.0_8) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,3) - Properties%Front_B) < 1e-6) then
                 k_front = k_front + 1
                 front_nodes(k_front) = Node_index
             end if
-            if (abs(Properties%Elements(i)%Coordinates(Node_index,3) - Properties%Length(3)) < 1e-6) then
+            if (abs(Properties%Elements(i)%Coordinates(Node_index,3) - Properties%Back_B) < 1e-6) then
                 k_back = k_back + 1
                 back_nodes(k_back) = Node_index
             end if
@@ -630,7 +630,7 @@ contains
         do i = 1, N%Element
             do j = 1, size(Properties%Elements(i)%Coordinates,1)
                 if (Properties%LBC == 4 .and. Properties%RBC == 4) then
-                    if (Properties%Elements(i)%Coordinates(j,1) == 0.0_8) then
+                    if (Properties%Elements(i)%Coordinates(j,1) == Properties%Left_B) then
                         if (any(Periodic_Nodes(1,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -638,7 +638,7 @@ contains
                             Periodic_Nodes(1,counter_1) = Properties%Elements(i)%Cell_Pointers(j)
                             Periodic_Nodes_Coordinates(1,counter_1,:) = Properties%Elements(i)%Coordinates(j,2:3)
                         end if
-                    else if (Properties%Elements(i)%Coordinates(j,1) == Properties%Length(1)) then
+                    else if (Properties%Elements(i)%Coordinates(j,1) == Properties%Right_B) then
                         if (any(Periodic_Nodes(2,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -652,7 +652,7 @@ contains
                     stop
                 end if
                 if (Properties%BBC == 4 .and. Properties%TBC == 4) then
-                    if (Properties%Elements(i)%Coordinates(j,2) == 0.0_8) then
+                    if (Properties%Elements(i)%Coordinates(j,2) == Properties%Bottom_B) then
                         if (any(Periodic_Nodes(3,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -661,7 +661,7 @@ contains
                             Periodic_Nodes_Coordinates(3,counter_3,1) = Properties%Elements(i)%Coordinates(j,1)
                             Periodic_Nodes_Coordinates(3,counter_3,2) = Properties%Elements(i)%Coordinates(j,3)
                         end if
-                    else if (Properties%Elements(i)%Coordinates(j,2) == Properties%Length(2)) then
+                    else if (Properties%Elements(i)%Coordinates(j,2) == Properties%Top_B) then
                         if (any(Periodic_Nodes(4,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -676,7 +676,7 @@ contains
                     stop
                 end if
                 if (Properties%FBC == 4 .and. Properties%BaBC == 4) then
-                    if (Properties%Elements(i)%Coordinates(j,3) == 0.0_8) then
+                    if (Properties%Elements(i)%Coordinates(j,3) == Properties%Front_B) then
                         if (any(Periodic_Nodes(5,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -684,7 +684,7 @@ contains
                             Periodic_Nodes(5,counter_5) = Properties%Elements(i)%Cell_Pointers(j)
                             Periodic_Nodes_Coordinates(5,counter_5,:) = Properties%Elements(i)%Coordinates(j,1:2)
                         end if
-                    else if (Properties%Elements(i)%Coordinates(j,3) == Properties%Length(3)) then
+                    else if (Properties%Elements(i)%Coordinates(j,3) == Properties%Back_B) then
                         if (any(Periodic_Nodes(6,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -782,7 +782,7 @@ contains
         do i = 1, N%Element
             do j = 1, size(Properties%Elements(i)%Coordinates,1)
                 if (Properties%LBC == 4 .and. Properties%RBC == 4) then
-                    if (Properties%Elements(i)%Coordinates(j,1) == 0.0_8) then
+                    if (Properties%Elements(i)%Coordinates(j,1) == Properties%Left_B) then
                         if (any(Periodic_Nodes(1,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -790,7 +790,7 @@ contains
                             Periodic_Nodes(1,counter_1) = Properties%Elements(i)%Cell_Pointers(j)
                             Periodic_Nodes_Coordinates(1,counter_1) = Properties%Elements(i)%Coordinates(j,2)
                         end if
-                    else if (Properties%Elements(i)%Coordinates(j,1) == Properties%Length(1)) then
+                    else if (Properties%Elements(i)%Coordinates(j,1) == Properties%Right_B) then
                         if (any(Periodic_Nodes(2,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -804,7 +804,7 @@ contains
                     stop
                 end if
                 if (Properties%BBC == 4 .and. Properties%TBC == 4) then
-                    if (Properties%Elements(i)%Coordinates(j,2) == 0.0_8) then
+                    if (Properties%Elements(i)%Coordinates(j,2) == Properties%Bottom_B) then
                         if (any(Periodic_Nodes(3,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else
@@ -812,7 +812,7 @@ contains
                             Periodic_Nodes(3,counter_3) = Properties%Elements(i)%Cell_Pointers(j)
                             Periodic_Nodes_Coordinates(3,counter_3) = Properties%Elements(i)%Coordinates(j,1)
                         end if
-                    else if (Properties%Elements(i)%Coordinates(j,2) == Properties%Length(2)) then
+                    else if (Properties%Elements(i)%Coordinates(j,2) == Properties%Top_B) then
                         if (any(Periodic_Nodes(4,:) == Properties%Elements(i)%Cell_Pointers(j))) then
                             continue
                         else

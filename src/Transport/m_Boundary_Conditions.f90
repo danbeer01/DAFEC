@@ -406,7 +406,7 @@ contains
 
             end if
 
-        else if (Properties%Elements(i)%Neighbours(j,2) == 5) then
+        else if (Properties%Elements(i)%Neighbours(j,2) == 6) then
 
             if (Properties%FBC == 1) then
 
@@ -430,7 +430,7 @@ contains
 
             end if
 
-        else if (Properties%Elements(i)%Neighbours(j,2) == 6) then
+        else if (Properties%Elements(i)%Neighbours(j,2) == 5) then
 
             if (Properties%BaBC == 1) then
 

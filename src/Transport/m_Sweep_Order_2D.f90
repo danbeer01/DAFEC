@@ -340,13 +340,13 @@ module m_Sweep_Order_2D
 
         else
 
-          if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),1) == 0.0_8 .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),1) == 0.0_8) then
+          if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),1) == Properties%Left_B .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),1) == Properties%Left_B) then
             Properties%Elements(i)%Neighbours(j,2) = 1
-          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),1) == Properties%Length(1) .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),1) == Properties%Length(1)) then
+          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),1) == Properties%Right_B .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),1) == Properties%Right_B) then
             Properties%Elements(i)%Neighbours(j,2) = 2
-          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),2) == Properties%Length(2) .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),2) == Properties%Length(2)) then
+          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),2) == Properties%Top_B .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),2) == Properties%Top_B ) then
             Properties%Elements(i)%Neighbours(j,2) = 3
-          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),2) == 0.0_8 .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),2) == 0.0_8) then
+          else if (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,1),2) == Properties%Bottom_B .and. Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(j,2),2) == Properties%Bottom_B) then
             Properties%Elements(i)%Neighbours(j,2) = 4
           end if
 
