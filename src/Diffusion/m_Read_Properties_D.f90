@@ -60,9 +60,6 @@ type :: PropertiesTypeD
     integer :: Case
     integer :: g
     real(kind = 8) :: alpha, Q_s
-    real(kind = 8), dimension(:,:,:,:), allocatable :: Element_Mass_Matrices
-    real(kind = 8), dimension(:,:,:,:), allocatable :: Element_Diffusion_Matrices
-    real(kind = 8), dimension(:,:,:), allocatable   :: Element_Source_Vectors
     real(kind = 8), dimension(:), allocatable       :: Length
     real(kind = 8), dimension(:), allocatable       :: Chi
     real(kind = 8), dimension(:,:), allocatable     :: Isoparametric_Coordinates
