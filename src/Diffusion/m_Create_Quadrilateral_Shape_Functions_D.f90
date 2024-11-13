@@ -368,7 +368,7 @@ contains
 
         real(kind = 8), dimension(:,:) :: D_Matrix
 
-        Num_Gauss_Points = (N%Degree+1)**2
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         allocate(xi(Num_Gauss_Points), eta(Num_Gauss_Points), w(Num_Gauss_Points))
 
@@ -414,7 +414,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, w
 
-        Num_Gauss_Points = (N%Degree+1)**2
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -454,7 +454,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, w
 
-        Num_Gauss_Points = (N%Degree+1)**2
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 

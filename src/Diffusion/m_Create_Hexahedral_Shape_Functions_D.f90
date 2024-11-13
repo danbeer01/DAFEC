@@ -517,7 +517,7 @@ contains
 
         real(kind = 8), dimension(:,:) :: D_Matrix
 
-        Num_Gauss_Points = (N%Degree+1)**3
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         allocate(dSFMatT(Num_Gauss_Points,Properties%Elements(i)%Number_of_Nodes,3), dSFMat(Num_Gauss_Points,3,Properties%Elements(i)%Number_of_Nodes))
 
@@ -563,7 +563,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -601,7 +601,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 

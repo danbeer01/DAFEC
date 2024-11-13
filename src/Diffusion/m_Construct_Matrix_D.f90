@@ -133,7 +133,7 @@ contains
         integer, intent(in) :: i
         integer             :: Num_Gauss_Points
 
-        Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points - 1
 
         allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,1,1), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,1,1), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -153,11 +153,7 @@ contains
 
         if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
 
-            if(Properties%Elements(i)%Number_of_Nodes == 3) then
-                Num_Gauss_Points = 3
-            else
-                Num_Gauss_Points = 7
-            end if
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -182,7 +178,7 @@ contains
 
         else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
-            Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,2,2), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -299,7 +295,7 @@ contains
 
         if (Properties%Elements(i)%Cell_Type == 12 .or. Properties%Elements(i)%Cell_Type == 29) then
 
-            Num_Gauss_Points = (Degree+1)**3
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -325,11 +321,7 @@ contains
 
         else if (Properties%Elements(i)%Cell_Type == 10 .or. Properties%Elements(i)%Cell_Type == 24) then
 
-            if (Degree == 1) then
-                Num_Gauss_Points = 5
-            else if (Degree == 2) then
-                Num_Gauss_Points = 11
-            end if
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -355,15 +347,7 @@ contains
 
         else if (Properties%Elements(i)%Cell_Type == 13) then
 
-            if (Degree == 1) then
-
-                Num_Gauss_Points = 8
-    
-            else if (Degree == 2) then
-    
-                Num_Gauss_Points = 21
-    
-            end if
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 
@@ -389,7 +373,7 @@ contains
 
         else if (Properties%Elements(i)%Cell_Type == 14) then
 
-            Num_Gauss_Points = 8
+            Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
             allocate(Properties%Elements(i)%Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Inverse_Jacobian(Num_Gauss_Points,3,3), Properties%Elements(i)%Det_Jacobian(Num_Gauss_Points))
 

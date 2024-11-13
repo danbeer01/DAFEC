@@ -209,11 +209,7 @@ contains
 
         real(kind = 8), dimension(:,:)   :: D_Matrix
 
-        if (N%Degree == 1) then
-            Num_Gauss_Points = 5
-        else if (N%Degree == 2) then
-            Num_Gauss_Points = 11
-        end if
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -261,11 +257,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        if (N%Degree == 1) then
-            Num_Gauss_Points = 5
-        else if (N%Degree == 2) then
-            Num_Gauss_Points = 11
-        end if
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -303,11 +295,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        if (N%Degree == 1) then
-            Num_Gauss_Points = 5
-        else if (N%Degree == 2) then
-            Num_Gauss_Points = 11
-        end if
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 

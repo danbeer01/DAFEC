@@ -130,7 +130,7 @@ contains
         type(NTypeD)          :: N
 
         integer, intent(in) :: i
-        integer             :: j, index_1, index_2
+        integer             :: j, index_1, index_2, Num_gauss_points
 
         real(kind = 8), dimension(N%Degree+1) :: x, w
 
@@ -140,9 +140,11 @@ contains
 
         D_Matrix = 0.0_8
 
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points - 1
+
         if (Properties%g == 0) then
 
-            call Generate_1D_Quad_Gauss_Points(N%Degree+1, x, w)
+            call Generate_1D_Quad_Gauss_Points(Num_gauss_points, x, w)
 
             Coordinates(1) = -1.0_8
 
@@ -156,7 +158,7 @@ contains
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+1
+                    do j = 1, Num_gauss_points
 
                         D_Matrix(index_1,index_2) = D_Matrix(index_1,index_2) + w(j)*Generate_Shape_Functions_Derivative(Coordinates, N, index_1, x(j))*Generate_Shape_Functions_Derivative(Coordinates, N, index_2, x(j))
 
@@ -170,13 +172,13 @@ contains
 
         else if(Properties%g == 1) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+1, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+1
+                    do j = 1, Num_gauss_points
 
                         D_Matrix(index_1,index_2) = D_Matrix(index_1,index_2) + w(j)*x(j)*Generate_Shape_Functions_Derivative(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))*Generate_Shape_Functions_Derivative(Properties%Elements(i)%Coordinates(:,1), N, index_2, x(j))
 
@@ -188,13 +190,13 @@ contains
 
         else if(Properties%g == 2) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+1, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+1
+                    do j = 1, Num_gauss_points
 
                         D_Matrix(index_1,index_2) = D_Matrix(index_1,index_2) + w(j)*(x(j)**2)*Generate_Shape_Functions_Derivative(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))*Generate_Shape_Functions_Derivative(Properties%Elements(i)%Coordinates(:,1), N, index_2, x(j))
 
@@ -214,7 +216,7 @@ contains
         type(NTypeD)          :: N
 
         integer, intent(in) :: i
-        integer             :: j, index_1, index_2
+        integer             :: j, index_1, index_2, Num_gauss_points
 
         real(kind = 8), dimension(N%Degree+2) :: x, w
 
@@ -224,9 +226,11 @@ contains
 
         Mass_Matrix = 0.0_8
 
+        Num_gauss_points = Properties%Elements(i)%Number_of_Gauss_Points
+
         if (Properties%g == 0) then
 
-            call Generate_1D_Quad_Gauss_Points(N%Degree+2, x, w)
+            call Generate_1D_Quad_Gauss_Points(Num_gauss_points, x, w)
 
             Coordinates(1) = -1.0_8
 
@@ -240,7 +244,7 @@ contains
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+2
+                    do j = 1, Num_gauss_points
 
                         Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + w(j)*Generate_Shape_Functions(Coordinates, N, index_1, x(j))*Generate_Shape_Functions(Coordinates, N, index_2, x(j))
 
@@ -254,13 +258,13 @@ contains
 
         else if(Properties%g == 1) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+2, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+2
+                    do j = 1, Num_gauss_points
 
                         Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + w(j)*x(j)*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_2, x(j))
 
@@ -272,13 +276,13 @@ contains
         
         else if(Properties%g == 2) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+2, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
                 do index_2 = 1, N%Degree+1
 
-                    do j = 1, N%Degree+2
+                    do j = 1, Num_gauss_points
 
                         Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + w(j)*(x(j)**2)*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_2, x(j))
 
@@ -298,7 +302,7 @@ contains
         type(NTypeD)          :: N
 
         integer, intent(in) :: i
-        integer             :: j, index_1
+        integer             :: j, index_1, Num_gauss_points
 
         real(kind = 8), dimension(N%Degree+2) :: x, w
 
@@ -308,9 +312,11 @@ contains
 
         Source_Vector = 0.0_8
 
+        Num_gauss_points = Properties%Elements(i)%Number_of_Gauss_Points
+
         if (Properties%g == 0) then
 
-            call Generate_1D_Quad_Gauss_Points(N%Degree+2, x, w)
+            call Generate_1D_Quad_Gauss_Points(Num_gauss_points, x, w)
 
             Coordinates(1) = -1.0_8
 
@@ -322,7 +328,7 @@ contains
 
             do index_1 = 1, N%Degree+1
 
-                do j = 1, N%Degree+2
+                do j = 1, Num_gauss_points
 
                     Source_Vector(index_1) = Source_Vector(index_1) + w(j)*Generate_Shape_Functions(Coordinates, N, index_1, x(j))
 
@@ -334,11 +340,11 @@ contains
 
         else if(Properties%g == 1) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+2, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
-                do j = 1, N%Degree+2
+                do j = 1, Num_gauss_points
 
                     Source_Vector(index_1) = Source_Vector(index_1) + w(j)*x(j)*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))
 
@@ -348,11 +354,11 @@ contains
         
         else if(Properties%g == 2) then
 
-            call Generate_Modified_Gauss_Points(N%Degree+2, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
+            call Generate_Modified_Gauss_Points(Num_gauss_points, x, w, Properties%Elements(i)%Volume, Properties%Elements(i)%Coordinates(1,1)+Properties%Elements(i)%Volume/2.0_8)
 
             do index_1 = 1, N%Degree+1
 
-                do j = 1, N%Degree+2
+                do j = 1, Num_gauss_points
 
                     Source_Vector(index_1) = Source_Vector(index_1) + w(j)*(x(j)**2)*Generate_Shape_Functions(Properties%Elements(i)%Coordinates(:,1), N, index_1, x(j))
 

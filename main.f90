@@ -57,12 +57,12 @@ call timer%Startdate()
 ! open(unit=1, file='vtk/2D/O4_quad.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O5_quad_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O8_quad.vtk', status='old', action='read')
-! open(unit=1, file='vtk/2D/C5G2_2.vtk', status='old', action='read')
+open(unit=1, file='vtk/2D/C5G2_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Ackroyd.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Cylinder.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/LWR.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/mixed_mesh.vtk', status='old', action='read')
-! open(unit=1, file='vtk/2D/C5G7.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/C5G7_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Curvilinear.vtk', status='old', action='read')
 
 ! open(unit=1, file='vtk/3D/Cube_2.vtk', status='old', action='read')
@@ -73,7 +73,7 @@ call timer%Startdate()
 ! open(unit=1, file='vtk/3D/O2_cube.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/O3_cube_3.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/Pyr_2.vtk', status='old', action='read')
-open(unit=1, file='vtk/3D/O2_Pyr.vtk', status='old', action='read')
+! open(unit=1, file='vtk/3D/O2_Pyr.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/pyramid_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/Pris.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/O2_Pris.vtk', status='old', action='read')
@@ -83,14 +83,14 @@ open(unit=1, file='vtk/3D/O2_Pyr.vtk', status='old', action='read')
 call vtk_mesh%read_VTK_file()
 
 ! Open input file for material and other data data
-open(unit=1, file='inputs/homo.txt', status='old', action='read')
+! open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/hetero.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/reed.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/sood_3.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/3_Region_Sphere.txt', status='old', action='read')
 
-! open(unit=1, file='inputs/Benchmarks/c5g2.txt', status='old', action='read')
+open(unit=1, file='inputs/Benchmarks/c5g2.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/Ackroyd.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/cylinder.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/LWR.txt', status='old', action='read')
@@ -124,8 +124,8 @@ call timer%elapseddate()
 
 ! Output VTK file
 if(Solve_Transport_Method) then
-    if(N%Degree <= 2) call Output_Discontinuous_VTK(Properties, vtk_mesh, N)
-    ! if(N%Degree <= 2) call Output_VTK(vtk_mesh, Results, N)
+    ! if(N%Degree <= 2) call Output_Discontinuous_VTK(Properties, vtk_mesh, N)
+    if(N%Degree <= 2) call Output_VTK(vtk_mesh, Results, N)
     if(N%Degree > 2 .and. N%D == 2) call Output_Higher_Order_VTK(Properties, vtk_mesh, Results, N)
 else
     if(N_D%Degree > 2 .and. N_D%D == 2) then

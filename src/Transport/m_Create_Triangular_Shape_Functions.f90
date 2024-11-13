@@ -205,8 +205,7 @@ contains
 
             end do
 
-            if (Properties%g == 0) Streaming_Matrix = Streaming_Matrix + 0.5_8*w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
-            if (Properties%g == 1) Streaming_Matrix = Streaming_Matrix + 0.5_8*w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
+            Streaming_Matrix = Streaming_Matrix + 0.5_8*w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
 
         end do
 
@@ -248,8 +247,7 @@ contains
                     xi_val = xi(j) 
                     eta_val = eta(j)
 
-                    if (Properties%g == 0) Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Generate_Triangular_Shape_Functions(N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
-                    if (Properties%g == 1) Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Generate_Triangular_Shape_Functions(N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+                    Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Generate_Triangular_Shape_Functions(N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
 
                 end do
 
@@ -294,8 +292,7 @@ contains
 
                 eta_val = eta(j)
 
-                if (Properties%g == 0) Source_Vector(index_1) = Source_Vector(index_1) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
-                if (Properties%g == 1) Source_Vector(index_1) = Source_Vector(index_1) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+                Source_Vector(index_1) = Source_Vector(index_1) + 0.5_8*w(j)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
 
             end do
 

@@ -33,6 +33,7 @@ type :: ElementTypeD
     integer :: Material
     integer :: Cell_Type
     integer :: Number_of_Nodes
+    integer :: Number_of_Gauss_Points
     real(kind=8) :: Volume
     integer, dimension(:), allocatable          :: Cell_Pointers
     real(kind=8), dimension(:,:), allocatable   :: Coordinates
@@ -59,11 +60,14 @@ type :: PropertiesTypeD
     integer :: Case
     integer :: g
     real(kind = 8) :: alpha, Q_s
-    real(kind = 8), dimension(:), allocatable     :: Length
-    real(kind = 8), dimension(:), allocatable     :: Chi
-    real(kind = 8), dimension(:,:), allocatable   :: Isoparametric_Coordinates
-    type(ElementTypeD), dimension(:), allocatable  :: Elements
-    type(MaterialTypeD), dimension(:), allocatable :: Materials
+    real(kind = 8), dimension(:,:,:,:), allocatable :: Element_Mass_Matrices
+    real(kind = 8), dimension(:,:,:,:), allocatable :: Element_Diffusion_Matrices
+    real(kind = 8), dimension(:,:,:), allocatable   :: Element_Source_Vectors
+    real(kind = 8), dimension(:), allocatable       :: Length
+    real(kind = 8), dimension(:), allocatable       :: Chi
+    real(kind = 8), dimension(:,:), allocatable     :: Isoparametric_Coordinates
+    type(ElementTypeD), dimension(:), allocatable   :: Elements
+    type(MaterialTypeD), dimension(:), allocatable  :: Materials
 end type PropertiesTypeD
 
 contains
@@ -187,6 +191,8 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
 
         Properties%Elements(i)%Cell_Pointers = this%Cell_Pointers(i,:)
 
+        Properties%Elements(i)%Number_of_Gauss_Points = Calculate_Number_of_Gauss_Points(Properties%Elements(i)%Cell_Type,N%Degree)
+
         if (this%Material_ID(i) > N%Material .or. this%Material_ID(i) < 1) then
 
             write(*,*) 'Invalid Material Index'
@@ -216,5 +222,46 @@ subroutine Read_Properties_Diffusion(Properties, N, this)
     close(1)
 
 end subroutine Read_Properties_Diffusion
+
+function Calculate_Number_of_Gauss_Points(Cell_Type,Degree) Result(Number_of_Gauss_Points)
+
+    integer, intent(in) :: Cell_Type, Degree
+    integer :: Number_of_Gauss_Points
+
+    select case(Cell_Type)
+        case(3)
+            Number_of_Gauss_Points = Degree+2
+        case(21)
+            Number_of_Gauss_Points = Degree+2
+        case(5)
+            if(Degree==1) Number_of_Gauss_Points = 3
+            if(Degree==3) Number_of_Gauss_Points = 7
+        case(22)
+            Number_of_Gauss_Points = 7
+        case(9)
+            Number_of_Gauss_Points = (Degree+1)**2
+        case(28)
+            Number_of_Gauss_Points = (Degree+1)**2
+        case(12)
+            Number_of_Gauss_Points = (Degree+1)**3
+        case(29)
+            Number_of_Gauss_Points = (Degree+1)**3
+        case(10)
+            Number_of_Gauss_Points = 5
+        case(24)
+            Number_of_Gauss_Points = 11
+        case(13)
+            if(Degree==1) Number_of_Gauss_Points = 8
+            if(Degree==2) Number_of_Gauss_Points = 21
+        case(14)
+            Number_of_Gauss_Points = 8
+        case default
+            write(*,*) 'Invalid Cell Type'
+            stop
+    end select
+
+    return
+
+end function Calculate_Number_of_Gauss_Points
 
 end module m_Read_Properties_D

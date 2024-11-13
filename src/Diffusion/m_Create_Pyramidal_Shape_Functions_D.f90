@@ -315,7 +315,7 @@ contains
 
         real(kind = 8), dimension(:,:) :: D_Matrix
 
-        Num_Gauss_Points = 8
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -363,7 +363,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        Num_Gauss_Points = 8
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
@@ -401,7 +401,7 @@ contains
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, zeta, w
 
-        Num_Gauss_Points = 8
+        Num_Gauss_Points = Properties%Elements(i)%Number_of_Gauss_Points
 
         Num_Nodes = Properties%Elements(i)%Number_of_Nodes
 
