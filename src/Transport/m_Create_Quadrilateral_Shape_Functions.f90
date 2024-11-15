@@ -641,5 +641,149 @@ contains
         end do
 
     end Function Integrate_Quad_Side_F_in
+
+    subroutine Integrate_Quad_Side_C(Properties,N,i,j,l,F_out,Omega_n)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j, l
+        real(kind = 8)      :: Omega_n
+        integer             :: Num_Gauss_Points, a, b, index_1, index_2, k, p
+        real(kind = 8), dimension(:,:) :: F_out
+        real(kind = 8), dimension(:), allocatable :: xi, w
+        integer, dimension(:), allocatable :: Nodes
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions
+        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi
+
+        Num_Gauss_Points = (2*N%Degree+2)
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes,Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        allocate(Nodes(N%Degree+1))
+
+        call Generate_1D_Quad_Gauss_Points(Num_Gauss_Points, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        do p = 3, N%Degree+1
+            if (p == 3) then
+                Nodes(p) = 5
+            else
+                Nodes(p) = 1 + Nodes(p-1)
+            end if
+        end do
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        do p = 1, size(Nodes)
+            k = Properties%Elements(i)%Side_Nodes(j,p)
+            Shape_Functions(k,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))
+            dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
+            dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+        end do
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+           do b = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(i)%Side_Nodes(j,b)
+
+                F_out(index_1,index_2) = F_out(index_1,index_2) + abs(Omega_n)*w(l)*sqrt(dx_dxi(l)**2 + dy_dxi(l)**2)*Shape_Functions(index_1,l)*Shape_Functions(index_2,l)
+
+            end do
+
+        end do
+
+    end subroutine Integrate_Quad_Side_C
+
+    subroutine Integrate_Quad_Side_F_in_C(Properties,N,i,j,l,F_in,Omega_n)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j, l
+        real(kind = 8), intent(in) :: Omega_n
+        integer             :: Num_Gauss_Points, a, b, k, k_n, p, temp, index_1, index_2
+
+        real(kind = 8), dimension(:,:) :: F_in
+        real(kind = 8), dimension(:), allocatable :: xi, w
+
+        integer, dimension(N%Degree+1) :: Nodes, Neighbour_Nodes
+
+        real(kind = 8), dimension(:), allocatable  :: dx_dxi, dy_dxi
+
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions, Shape_Functions_Neighbour
+
+        Num_Gauss_Points = (2*N%Degree+2)
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes, Num_Gauss_Points))
+
+        allocate(Shape_Functions_Neighbour(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Number_of_Nodes, Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        call Generate_1D_Quad_Gauss_Points(Num_Gauss_Points, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        do p = 3, N%Degree+1
+            if (p == 3) then
+                Nodes(p) = 5
+            else
+                Nodes(p) = 1 + Nodes(p-1)
+            end if
+        end do
+
+        Neighbour_Nodes = Nodes
+        temp = Neighbour_Nodes(1)
+        Neighbour_Nodes(1) = Neighbour_Nodes(2)
+        Neighbour_Nodes(2) = temp
+        do p = 3, 2 + (size(Neighbour_Nodes) - 2)/2
+            temp = Neighbour_Nodes(p)
+            Neighbour_Nodes(p) = Neighbour_Nodes(size(Neighbour_Nodes) - p + 3)
+            Neighbour_Nodes(size(Neighbour_Nodes) - p + 3) = temp
+        end do
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        Shape_Functions_Neighbour = 0.0_8
+
+        do p = 1, size(Nodes)
+            k = Properties%Elements(i)%Side_Nodes(j,p)
+            Shape_Functions(k,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))
+            k_n = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),p)
+            Shape_Functions_Neighbour(k_n,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Neighbour_Nodes(p), 1.0_8, xi(l))
+            dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
+            dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+        end do
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+            do b = 1, size(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),:))
+ 
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),b)
+
+                F_in(index_1,index_2) = F_in(index_1,index_2) + abs(Omega_n)*w(l)*sqrt(dx_dxi(l)**2 + dy_dxi(l)**2)*Shape_Functions(index_1,l)*Shape_Functions_Neighbour(index_2,l)
+
+            end do
+
+        end do
+
+    end subroutine Integrate_Quad_Side_F_in_C
     
 end module m_Create_Quadrilateral_Shape_Functions

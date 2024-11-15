@@ -183,6 +183,15 @@ CMakeFiles/src.dir/m_boundary_conditions.mod.stamp: CMakeFiles/src.dir/src/Trans
 CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_create_quadrilateral_shape_functions.mod.stamp
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_gauss_points.mod.stamp
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_read_properties.mod.stamp
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o.provides.build: CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp
+CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp: CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o
+	$(CMAKE_COMMAND) -E cmake_copy_f90_mod m_calculate_curvilinear_normals.mod CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp GNU
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o.provides.build:
+	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o.provides.build
+CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o.provides.build
 CMakeFiles/src.dir/src/Transport/m_Calculate_mu_w.f90.o.provides.build: CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp
 CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp: CMakeFiles/src.dir/src/Transport/m_Calculate_mu_w.f90.o
 	$(CMAKE_COMMAND) -E cmake_copy_f90_mod m_calculate_mu_w.mod CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp GNU
@@ -389,6 +398,7 @@ CMakeFiles/src.dir/m_sweep_order_1d.mod.stamp: CMakeFiles/src.dir/src/Transport/
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o.provides.build
+CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o: CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o: CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o: CMakeFiles/src.dir/m_read_properties.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o: CMakeFiles/src.dir/m_rz.mod.stamp

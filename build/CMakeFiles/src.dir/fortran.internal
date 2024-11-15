@@ -4,6 +4,7 @@ provides
  determine_solve_method.mod
  m_boundary_conditions.mod
  m_boundary_conditions_d.mod
+ m_calculate_curvilinear_normals.mod
  m_calculate_mu_w.mod
  m_constants_mod.mod
  m_construct_matrix_1d.mod

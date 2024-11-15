@@ -285,7 +285,7 @@ contains
         real(kind = 8), dimension(N%Ordinates/8) :: w
 
         integer, intent(in) :: i
-        integer :: ang, g_s_index, g_index, w_index
+        integer :: ang, g_s_index, g_index, w_index = 0
         integer :: l, m
 
         if (N%D == 1) then
@@ -558,7 +558,7 @@ contains
         type(PropertiesType), intent(inout) :: Properties
         type(NType), intent(in)             :: N
 
-        integer :: i, g_index, ang, mu_counter, p, sign
+        integer :: i, g_index, ang, mu_counter, p, sign = 1
 
         integer, dimension(N%Ordinates) :: p_indices, q_indices, w_indices, mu_indices
 

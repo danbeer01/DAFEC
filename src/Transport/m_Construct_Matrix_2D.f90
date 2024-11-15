@@ -32,9 +32,19 @@ contains
 
         call Construct_Streaming_Matrix(Properties, N, i, ang, mu, eta)
 
-        call Construct_F_out_Matrix(Properties, N, i, mu, eta, F_out)
+        if (N%Degree == 1) then
 
-        call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta)
+            call Construct_F_out_Matrix(Properties, N, i, mu, eta, F_out)
+
+            call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta)
+
+        else
+
+            call Construct_F_out_Matrix_C(Properties, N, i, mu, eta, F_out)
+
+            call Construct_F_in_Matrix_C(Properties, N, i, ang, mu, eta)
+
+        end if
 
         Properties%Elements(i)%K_Matrix(g_index,ang,:,:) = -Properties%Elements(i)%S_Matrix(ang,:,:) + Properties%Elements(i)%Sigma_t(g_index)*Properties%Elements(i)%A_Matrix + F_out
 
@@ -192,6 +202,108 @@ contains
         end do
 
     end subroutine Construct_F_out_Matrix
+
+    subroutine Construct_F_in_Matrix_C(Properties, N, i, ang, mu, eta)
+
+        type(PropertiesType), intent(inout)  :: Properties
+        type(NType), intent(in)              :: N
+
+        real(kind=8), intent(in) :: mu, eta
+        integer, intent(in)      :: i, ang
+        
+        real(kind = 8) :: Omega_n
+
+        integer :: side_index, gauss_index
+
+        do side_index = 1, Properties%Elements(i)%Number_of_Sides
+
+            Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = 0.0_8
+
+            do gauss_index = 1, 2*N%Degree + 2
+
+                Omega_n = (Properties%Elements(i)%Gauss_Unit_Vectors(side_index,gauss_index,1)*mu + Properties%Elements(i)%Gauss_Unit_Vectors(side_index,gauss_index,2)*eta)
+
+                if (Omega_n < 0) then
+
+                    if (Properties%Elements(i)%Neighbours(side_index,1) == 0) then
+
+                        if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
+
+                            ! call Integrate_Tri_Side(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+
+                        else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
+
+                            call Integrate_Quad_Side_C(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+
+                        end if
+
+                    else
+
+                        if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
+
+                            ! call Integrate_Tri_Side_F_in(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+
+                        else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
+
+                            call Integrate_Quad_Side_F_in_C(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+
+                        end if
+
+                    end if
+
+                end if
+
+            end do
+
+        end do
+
+    end subroutine Construct_F_in_Matrix_C
+
+    subroutine Construct_F_out_Matrix_C(Properties, N, i, mu, eta, F_out)
+
+        type(PropertiesType), intent(inout)  :: Properties
+        type(NType), intent(in)              :: N
+
+        real(kind=8), intent(in) :: mu, eta
+        integer, intent(in)      :: i
+
+        real(kind = 8), dimension(:,:) :: F_out
+
+        real(kind = 8) :: Omega_n, r
+
+        integer :: side_index, gauss_index
+
+        F_out = 0.0_8
+
+        do side_index = 1, Properties%Elements(i)%Number_of_Sides
+
+            r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
+
+            do gauss_index = 1, 2*N%Degree + 2
+
+                Omega_n = (Properties%Elements(i)%Gauss_Unit_Vectors(side_index,gauss_index,1)*mu + Properties%Elements(i)%Gauss_Unit_Vectors(side_index,gauss_index,2)*eta)
+
+                if (Omega_n > 0) then
+
+                    if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
+
+                        ! call Integrate_Tri_Side(Properties,N,i,side_index,gauss_index,F_out,Omega_n)
+
+                    else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
+
+                        call Integrate_Quad_Side_C(Properties,N,i,side_index,gauss_index,F_out,Omega_n)
+
+                    end if
+
+                end if
+
+            end do
+
+        end do
+
+        if (Properties%g == 1) F_out = F_out*r
+
+    end subroutine Construct_F_out_Matrix_C
 
     subroutine Calculate_Jacobian_2D(Properties, Degree, i)
 

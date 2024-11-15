@@ -12,6 +12,7 @@ module m_Sweep_Order_2D
     use m_VTK_Reader
     use m_Calculate_mu_w
     use m_RZ
+    use m_Calculate_Curvilinear_Normals
 
   implicit none
 
@@ -25,7 +26,7 @@ module m_Sweep_Order_2D
 
       integer, dimension(:,:,:), allocatable :: Dependencies
 
-      integer :: m, i, j, Sweep_Counter, iter, Total_Ordinates
+      integer :: m, i, j, Sweep_Counter, iter, Total_Ordinates = 0
 
       logical :: contains_negative, removed_element
 
@@ -110,6 +111,7 @@ module m_Sweep_Order_2D
 
       do i = 1, N%Element
           allocate(Properties%Elements(i)%Unit_Vectors(Properties%Elements(i)%Number_of_Sides,2))
+          allocate(Properties%Elements(i)%Gauss_Unit_Vectors(Properties%Elements(i)%Number_of_Sides,2*N%Degree+2,2))
           do j = 1, Properties%Elements(i)%Number_of_Sides
               node_num = j + 2
               if (node_num > Properties%Elements(i)%Number_of_Sides) node_num = node_num - Properties%Elements(i)%Number_of_Sides
@@ -139,6 +141,7 @@ module m_Sweep_Order_2D
               mag = sqrt(dx**2 + dy**2)
               Properties%Elements(i)%Unit_Vectors(j,1) = dy/mag
               Properties%Elements(i)%Unit_Vectors(j,2) = -dx/mag
+              if(N%Degree > 1) call Calculate_Curvilinear_Unit_Vectors(Properties, N, i, j, Properties%Elements(i)%Gauss_Unit_Vectors(j,:,:))
           end do
       end do
 
@@ -174,7 +177,7 @@ module m_Sweep_Order_2D
   subroutine Ordinates_2D(m,N_Angles,mu,eta,mu_val,eta_val)
 
       integer, intent(in)    :: m, N_Angles
-      integer :: a, b
+      integer :: a = 0, b = 0
       integer :: i, j, counter, m_eff
 
       real(kind=8), intent(in), dimension(:) :: mu, eta

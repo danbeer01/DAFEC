@@ -101,6 +101,11 @@
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Calculate_Curvilinear_Normals.f90 -o CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o",
+  "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Calculate_Curvilinear_Normals.f90"
+},
+{
+  "directory": "/home/daniel/Documents/DAFEC/build",
   "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_1D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_1D.f90"
 },

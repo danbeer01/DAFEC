@@ -598,6 +598,30 @@ src/Transport/m_Boundary_Conditions.f90.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.s
 .PHONY : src/Transport/m_Boundary_Conditions.f90.s
 
+src/Transport/m_Calculate_Curvilinear_Normals.o: src/Transport/m_Calculate_Curvilinear_Normals.f90.o
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.o
+
+# target to build an object file
+src/Transport/m_Calculate_Curvilinear_Normals.f90.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.f90.o
+
+src/Transport/m_Calculate_Curvilinear_Normals.i: src/Transport/m_Calculate_Curvilinear_Normals.f90.i
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.i
+
+# target to preprocess a source file
+src/Transport/m_Calculate_Curvilinear_Normals.f90.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.i
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.f90.i
+
+src/Transport/m_Calculate_Curvilinear_Normals.s: src/Transport/m_Calculate_Curvilinear_Normals.f90.s
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.s
+
+# target to generate assembly for a file
+src/Transport/m_Calculate_Curvilinear_Normals.f90.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.s
+.PHONY : src/Transport/m_Calculate_Curvilinear_Normals.f90.s
+
 src/Transport/m_Calculate_mu_w.o: src/Transport/m_Calculate_mu_w.f90.o
 .PHONY : src/Transport/m_Calculate_mu_w.o
 
@@ -1337,6 +1361,9 @@ help:
 	@echo "... src/Transport/m_Boundary_Conditions.o"
 	@echo "... src/Transport/m_Boundary_Conditions.i"
 	@echo "... src/Transport/m_Boundary_Conditions.s"
+	@echo "... src/Transport/m_Calculate_Curvilinear_Normals.o"
+	@echo "... src/Transport/m_Calculate_Curvilinear_Normals.i"
+	@echo "... src/Transport/m_Calculate_Curvilinear_Normals.s"
 	@echo "... src/Transport/m_Calculate_mu_w.o"
 	@echo "... src/Transport/m_Calculate_mu_w.i"
 	@echo "... src/Transport/m_Calculate_mu_w.s"

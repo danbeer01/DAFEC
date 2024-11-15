@@ -95,6 +95,7 @@ add_library(src
     src/Transport/m_Construct_Matrix_2D.f90
     src/Transport/m_Construct_Matrix_3D.f90
     src/Transport/m_Calculate_mu_w.f90
+    src/Transport/m_Calculate_Curvilinear_Normals.f90
     src/Transport/m_Sweep_Order_1D.f90
     src/Transport/m_Sweep_Order_2D.f90
     src/Transport/m_Sweep_Order_3D.f90

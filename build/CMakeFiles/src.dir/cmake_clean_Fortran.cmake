@@ -16,6 +16,10 @@ FILE(REMOVE
   "M_BOUNDARY_CONDITIONS_D.mod"
   "CMakeFiles/src.dir/m_boundary_conditions_d.mod.stamp"
 
+  "m_calculate_curvilinear_normals.mod"
+  "M_CALCULATE_CURVILINEAR_NORMALS.mod"
+  "CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp"
+
   "m_calculate_mu_w.mod"
   "M_CALCULATE_MU_W.mod"
   "CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp"

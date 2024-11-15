@@ -2,14 +2,14 @@
 1		!Case 0 = Fixed Source, 1 = Eigenvalue
 1		!Materials
 1		!Groups
-0		!Angles
+16		!Angles
 0		!Anisotropy 0 to 10
 0		!Geometry 0 = Slab, 1 = Cylindrical, 2 = Spherical
 0		!Adjoint? 0 = No, 1 = Yes
 ------------------------------Boundary Conditions---------------------------------------------
-1		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 5 = Surface Source
+2		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 5 = Surface Source
 2		!RBC
-1		!TBC
+2		!TBC
 2		!BBC
 1		!FBC
 1		!BaBC
@@ -20,5 +20,5 @@
 ------------------------------Material 1 Properties-------------------
 1.0 1.0 1.0	!Sigma_a for each group
 1.0 0.0 1.0 	!nu*Sigma_f or Source
-1.0 5.0 1.0	!Sigma_s matrix
+0.0 5.0 1.0	!Sigma_s matrix
 0.0 0.0

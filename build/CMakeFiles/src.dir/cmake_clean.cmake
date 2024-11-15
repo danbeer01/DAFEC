@@ -17,6 +17,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o"
   "CMakeFiles/src.dir/src/Diffusion/m_VTK_Writer_D.f90.o"
   "CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o"
+  "CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o"
   "CMakeFiles/src.dir/src/Transport/m_Calculate_mu_w.f90.o"
   "CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_1D.f90.o"
   "CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_2D.f90.o"

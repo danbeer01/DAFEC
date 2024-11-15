@@ -64,6 +64,7 @@ type :: ElementType
     real(kind=8), dimension(:,:), allocatable     :: Scalar_Flux
     real(kind=8), dimension(:,:,:,:), allocatable :: Legendre_Flux
     real(kind=8), dimension(:,:), allocatable     :: Unit_Vectors
+    real(kind=8), dimension(:,:,:), allocatable   :: Gauss_Unit_Vectors
     integer, dimension(:,:), allocatable          :: Neighbours
     integer, dimension(:,:), allocatable          :: Side_Nodes
     type(SideType), dimension(:), allocatable     :: Sides
