@@ -31,19 +31,21 @@ use m_Boundary_Conditions
 use m_Cylindrical
 use m_Spherical
 use m_RZ
+use C_timer
 
 implicit none
 
 contains
 
-    subroutine Solver(Properties, Results, N)
+    subroutine Solver(Properties, Results, N, timer)
 
         type(PropertiesType), intent(inout) :: Properties
         type(ResultsType), intent(inout)    :: Results
         type(NType), intent(in)             :: N
+        type(t_timer)                       :: timer
 
-        real(kind = 8)                       :: Total_Source, Total_Source_new
-        real(kind = 8)                       :: lambda_old = 1.1_8, lambda_new = 1.0_8
+        real(kind = 8)                      :: Total_Source, Total_Source_new
+        real(kind = 8)                      :: lambda_old = 1.1_8, lambda_new = 1.0_8
 
         integer, dimension(N%Ordinates,N%Element) :: Sweep_Order
 
@@ -94,6 +96,8 @@ contains
         end do
 
         call Create_Matrices(Properties, N)
+
+        call timer%matrix()
 
         iter = 0
 

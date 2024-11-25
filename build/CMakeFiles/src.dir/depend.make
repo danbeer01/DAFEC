@@ -154,6 +154,7 @@ CMakeFiles/src.dir/m_results_d.mod.stamp: CMakeFiles/src.dir/src/Diffusion/m_Res
 CMakeFiles/src.dir/src/Diffusion/m_Results_D.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Diffusion/m_Results_D.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Diffusion/m_Results_D.f90.o.provides.build
+CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o: CMakeFiles/src.dir/c_timer.mod.stamp
 CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o: CMakeFiles/src.dir/m_construct_matrix_d.mod.stamp
 CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o: CMakeFiles/src.dir/m_normalisation_d.mod.stamp
 CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o: CMakeFiles/src.dir/m_petsc.mod.stamp
@@ -351,6 +352,7 @@ CMakeFiles/src.dir/m_small_matrix_solver.mod.stamp: CMakeFiles/src.dir/src/Trans
 CMakeFiles/src.dir/src/Transport/m_Small_Matrix_Solver.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Small_Matrix_Solver.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Small_Matrix_Solver.f90.o.provides.build
+CMakeFiles/src.dir/src/Transport/m_Solver.f90.o: CMakeFiles/src.dir/c_timer.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Solver.f90.o: CMakeFiles/src.dir/m_boundary_conditions.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Solver.f90.o: CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Solver.f90.o: CMakeFiles/src.dir/m_construct_matrix_1d.mod.stamp

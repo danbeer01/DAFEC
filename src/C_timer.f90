@@ -15,12 +15,20 @@ public t_timer
 
 TYPE t_timer
     REAL(Kind=dp)   :: time
+    REAL(Kind=dp)   :: start_time
+    REAL(Kind=dp)   :: input_time
+    REAL(Kind=dp)   :: matrix_time
+    REAL(Kind=dp)   :: solve_time
+    REAL(Kind=dp)   :: output_time
     integer         :: Secs,mins,milli,hours
 CONTAINS
     PROCEDURE,pass :: Startdate
     PROCEDURE,pass :: elapseddate
     PROCEDURE,PASS :: start_timer
     PROCEDURE,PASS :: elapsed_time
+    PROCEDURE,PASS :: input
+    PROCEDURE,PASS :: matrix
+    PROCEDURE,PASS :: solve
 end type t_timer
     
 contains
@@ -118,18 +126,52 @@ subroutine elapseddate(this)
     this%milli = values(8)
 end subroutine
 
-
 subroutine start_timer(this) !starts the timer
     CLASS(t_timer),INTENT(INOUT) :: this
     CALL CPU_TIME(this%time)
+    this%start_time = this%time
 end subroutine start_timer
+
+subroutine input(this) !calls the time taken
+    CLASS(t_timer),INTENT(INOUT) :: this
+    real(kind=dp) :: time
+    CALL CPU_TIME(time)
+    this%input_time = time - this%time
+    this%time = time
+end subroutine input
+
+subroutine matrix(this) !calls the time taken
+    CLASS(t_timer),INTENT(INOUT) :: this
+    real(kind=dp) :: time
+    CALL CPU_TIME(time)
+    this%matrix_time = time - this%time
+    this%time = time
+end subroutine matrix
+
+subroutine solve(this) !calls the time taken
+    CLASS(t_timer),INTENT(INOUT) :: this
+    real(kind=dp) :: time
+    CALL CPU_TIME(time)
+    this%solve_time = time - this%time
+    this%time = time
+end subroutine solve
 
 subroutine elapsed_time(this) !calls the time taken
     CLASS(t_timer),INTENT(INOUT) :: this
     REAL(KIND = dp) :: stopTime
     CALL CPU_TIME(stopTime)
-    print *, "THE ELAPSED SERIAL TIME IS: ", (stopTime - this%time)
-    this%time = stopTime
+
+    this%output_time = stopTime - this%time
+
+    print *, 'Stage           ', 'Total CPU Time', '            Percent CPU Time'
+    print *, '------------------------------------------------------------'
+    print *, "1   Total Run", (stopTime - this%start_time), 100.0
+    print *, "2   Input    ", this%input_time, (this%input_time/(stopTime - this%start_time))*100
+    print *, "3   Matrix   ", this%matrix_time, (this%matrix_time/(stopTime - this%start_time))*100
+    print *, "4   Solve    ", this%solve_time, (this%solve_time/(stopTime - this%start_time))*100
+    print *, "5   Output   ", this%output_time, (this%output_time/(stopTime - this%start_time))*100
+    print *, " "
+    
 end subroutine elapsed_time
 
 end module

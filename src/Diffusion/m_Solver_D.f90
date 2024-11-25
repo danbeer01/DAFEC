@@ -14,18 +14,20 @@ use m_PETSc
 use m_Construct_Matrix_D
 use m_VTK_Reader
 use m_Normalisation_D
+use C_timer
 
 implicit none
 
 contains
 
-    subroutine Solver_Diffusion(Properties, Results, N, this)
+    subroutine Solver_Diffusion(Properties, Results, N, this, timer)
 
         type(PropertiesTypeD), intent(inout) :: Properties
         type(ResultsTypeD), intent(inout)    :: Results
         type(NTypeD), intent(in)             :: N
         type(PETScGroupType)                 :: PETSc
         type(Mesh), intent(inout)            :: this
+        type(t_timer)                        :: timer
 
         real(kind = 8), dimension(N%Group,N%N)      :: Total_Source, Total_Source_new
         real(kind = 8), dimension(N%Group,N%N)      :: Flux
@@ -69,6 +71,8 @@ contains
 
         ! Initialise PETSc
         call Start_PETSc(PETSc, Properties, this, N, tol, max_iter, Periodic_Pairs)
+
+        call timer%matrix()
 
         ! Iterate until the eigenvalue converges
         do while (ABS((lambda_new - lambda_old)/(lambda_old)) > tol)
