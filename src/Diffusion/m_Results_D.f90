@@ -22,8 +22,18 @@ contains
     subroutine print_keff_Diffusion(Results)
         class(ResultsTypeD)      :: Results
         
-        print *, "k_eff = ", Results%k_eff
+        write(*, '(A)') " **************************************"
+
+        write(*, '(A)') " *                                    *"
+
+        write(*, *)      "* ", "K-eff = ", Results%k_eff,   "*"
+
+        write(*, '(A)') " *                                    *"
+
+        write(*, '(A)') " **************************************"
+
         print *, " "
+
     end subroutine print_keff_Diffusion
 
 end module

@@ -22,9 +22,19 @@ contains
 
     subroutine print_keff(Results)
         class(ResultsType)      :: Results
-        
-        print *, "k_eff = ", Results%k_eff
+
+        write(*, '(A)') " **************************************"
+
+        write(*, '(A)') " *                                    *"
+
+        write(*, *)      "* ", "K-eff = ", Results%k_eff,   "*"
+
+        write(*, '(A)') " *                                    *"
+
+        write(*, '(A)') " **************************************"
+
         print *, " "
+
     end subroutine print_keff
 
 end module m_Results

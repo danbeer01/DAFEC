@@ -95,7 +95,19 @@ contains
 
         end do
 
-        print *, 'Iterations: ', iter
+        print *, " "
+
+        write(*, '(A)') " ***************************"
+
+        write(*, '(A)') " *                         *"
+
+        write(*, *)      "* ", 'Iterations:', iter,      "*"
+
+        write(*, '(A)') " *                         *"
+
+        write(*, '(A)') " ***************************"
+
+        print *, " "
 
         ! End PETSc
         call End_PETSc(PETSc)

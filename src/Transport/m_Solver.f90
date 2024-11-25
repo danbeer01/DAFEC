@@ -129,14 +129,10 @@ contains
 
             lambda_old = lambda_new
 
-            do i = 1,N%Element
+            ! Calculate the source terms for each element
+            call Calculate_Source(Properties, N, lambda_new)
 
-                ! Calculate the source terms for each element
-                call Calculate_Source(Properties, N, lambda_new, i)
-
-                if(N%Anisotropy > 0) call Anisotropic_Scattering(Properties, N, i)
-
-            end do
+            if(N%Anisotropy > 0) call Anisotropic_Scattering(Properties, N)
 
             call Calculate_Total_Source(Total_Source, N, Properties)
 
@@ -164,14 +160,10 @@ contains
 
             call Calculate_Scalar_Flux(Properties, N)
 
-            do i = 1,N%Element
+            ! Calculate the source terms for each element
+            call Calculate_Source(Properties, N, lambda_new)
 
-                ! Calculate the source terms for each element
-                call Calculate_Source(Properties, N, lambda_new, i)
-
-                if(N%Anisotropy > 0) call Anisotropic_Scattering(Properties, N, i)
-
-            end do
+            if(N%Anisotropy > 0) call Anisotropic_Scattering(Properties, N)
 
             call Calculate_Total_Source(Total_Source_new, N, Properties)
 
@@ -190,7 +182,19 @@ contains
 
         end do
 
-        print *, 'Iterations', iter
+        print *, " "
+
+        write(*, '(A)') " ***************************"
+
+        write(*, '(A)') " *                         *"
+
+        write(*, *)      "* ", 'Iterations:', iter,      "*"
+
+        write(*, '(A)') " *                         *"
+
+        write(*, '(A)') " ***************************"
+
+        print *, " "
 
         end if
 
@@ -207,73 +211,78 @@ contains
 
     end subroutine Solver
 
-    subroutine Calculate_Source(Properties, N, k_eff, i)
+    subroutine Calculate_Source(Properties, N, k_eff)
 
         type(PropertiesType), intent(inout) :: Properties
         type(NType), intent(in)             :: N
 
         real(kind = 8) :: k_eff
 
-        integer, intent(in) :: i
-        integer :: g_s_index, g_index, ang
+        integer :: i, ang, g_s_index, g_index
 
+        !$OMP PARALLEL DO PRIVATE(ang,i,g_index,g_s_index)
         do ang = 1,N%Ordinates
 
-            do g_index = 1,N%Group
+            do i = 1,N%Element
 
-                if (Properties%Case == 0) then
-
-                    Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Sigma_f(g_index)*Properties%Elements(i)%Source_Vector(:) + Properties%Elements(i)%Sigma_s(0,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_index,:))
-
-                else if (Properties%Case == 1) then
-
-                    Properties%Elements(i)%Source(g_index,ang,:) = (Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index) + Properties%Elements(i)%Sigma_s(0,g_index,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_index,:))
-
-                end if
-
-                do g_s_index = g_index,2,-1 ! Upscatter
+                do g_index = 1,N%Group
 
                     if (Properties%Case == 0) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
-
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
+                        Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Sigma_f(g_index)*Properties%Elements(i)%Source_Vector(:) + Properties%Elements(i)%Sigma_s(0,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_index,:))
 
                     else if (Properties%Case == 1) then
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index-1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
-
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index) + Properties%Chi(g_s_index-1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
+                        Properties%Elements(i)%Source(g_index,ang,:) = (Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index) + Properties%Elements(i)%Sigma_s(0,g_index,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_index,:))
 
                     end if
 
-                end do
+                    do g_s_index = g_index,2,-1 ! Upscatter
 
-                do g_s_index = g_index,(N%Group-1) ! Downscatter
+                        if (Properties%Case == 0) then
 
-                    if (Properties%Case == 0) then
+                            if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+                            if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+                        else if (Properties%Case == 1) then
 
-                    else if (Properties%Case == 1) then
+                            if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index-1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index+1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+                            if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index-1,g_index) + Properties%Chi(g_s_index-1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index-1,:))
 
-                        if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index) + Properties%Chi(g_s_index+1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+                        end if
 
-                    end if
+                    end do
+
+                    do g_s_index = g_index,(N%Group-1) ! Downscatter
+
+                        if (Properties%Case == 0) then
+
+                            if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+
+                            if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+
+                        else if (Properties%Case == 1) then
+
+                            if (Properties%Adjoint == 0) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index) + Properties%Chi(g_index)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_s_index+1))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+
+                            if (Properties%Adjoint == 1) Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (Properties%Elements(i)%Sigma_s(0,g_s_index+1,g_index) + Properties%Chi(g_s_index+1)*(1.0_8/k_eff)*Properties%Elements(i)%Sigma_f(g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(g_s_index+1,:))
+
+                        end if
+
+                    end do
 
                 end do
 
             end do
 
         end do
+        !$OMP END PARALLEL DO
 
     end subroutine Calculate_Source
 
-    subroutine Anisotropic_Scattering(Properties, N, i)
+    subroutine Anisotropic_Scattering(Properties, N)
 
         type(NType), intent(in)             :: N
         type(PropertiesType), intent(inout) :: Properties
@@ -284,8 +293,7 @@ contains
         real(kind = 8), dimension(N%Angle)   :: mu_1D
         real(kind = 8), dimension(N%Ordinates/8) :: w
 
-        integer, intent(in) :: i
-        integer :: ang, g_s_index, g_index, w_index = 0
+        integer :: i, ang, g_s_index, g_index, w_index = 0
         integer :: l, m
 
         if (N%D == 1) then
@@ -294,41 +302,45 @@ contains
 
         call calculate_w_1D(w)
 
-        do g_index = 1, N%Group
+        do i = 1,N%Element
 
-            do l = 1, N%Anisotropy
+            do g_index = 1, N%Group
 
-                do ang = 1, N%Angle
+                do l = 1, N%Anisotropy
 
-                    call calculate_P_l(mu_1D(ang), l, P_l)
+                    do ang = 1, N%Angle
 
-                    Properties%Elements(i)%Legendre_Flux(g_index,l,1,:) = Properties%Elements(i)%Legendre_Flux(g_index,l,1,:) + 0.5_8*w(ang)*P_l*Properties%Elements(i)%Flux(g_index,ang,:)
+                        call calculate_P_l(mu_1D(ang), l, P_l)
+
+                        Properties%Elements(i)%Legendre_Flux(g_index,l,1,:) = Properties%Elements(i)%Legendre_Flux(g_index,l,1,:) + 0.5_8*w(ang)*P_l*Properties%Elements(i)%Flux(g_index,ang,:)
+
+                    end do
 
                 end do
 
             end do
 
-        end do
+            do g_index = 1, N%Group
 
-        do g_index = 1, N%Group
+                do ang = 1, N%Angle
 
-            do ang = 1, N%Angle
+                    do l = 1, N%Anisotropy
 
-                do l = 1, N%Anisotropy
+                        call calculate_P_l(mu_1D(ang), l, P_l)
 
-                    call calculate_P_l(mu_1D(ang), l, P_l)
+                        Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*Properties%Elements(i)%Sigma_s(l,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_index,l,1,:))
 
-                    Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*Properties%Elements(i)%Sigma_s(l,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_index,l,1,:))
+                        do g_s_index = g_index,2,-1 ! Upscatter
 
-                    do g_s_index = g_index,2,-1 ! Upscatter
+                            Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*(Properties%Elements(i)%Sigma_s(l,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index-1,l,1,:))
 
-                        Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*(Properties%Elements(i)%Sigma_s(l,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index-1,l,1,:))
+                        end do
 
-                    end do
+                        do g_s_index = g_index,(N%Group-1) ! Downscatter
 
-                    do g_s_index = g_index,(N%Group-1) ! Downscatter
+                            Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*(Properties%Elements(i)%Sigma_s(l,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index+1,l,1,:))
 
-                        Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + (2*l+1)*P_l*(Properties%Elements(i)%Sigma_s(l,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index+1,l,1,:))
+                        end do
 
                     end do
 
@@ -344,29 +356,33 @@ contains
 
         call calculate_w(w)
 
-        do g_index = 1, N%Group
+        do i = 1,N%Element
 
-            do l = 1, N%Anisotropy
+            do g_index = 1, N%Group
 
-                do m = 0, l
+                do l = 1, N%Anisotropy
 
-                    do ang = 1, N%Ordinates
+                    do m = 0, l
 
-                        if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
-                        if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
+                        do ang = 1, N%Ordinates
 
-                        if (w_index == 0) then
+                            if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
+                            if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
 
-                            if (N%D == 2) w_index = N%Ordinates/4
-                            if (N%D == 3) w_index = N%Ordinates/8
+                            if (w_index == 0) then
 
-                        end if
+                                if (N%D == 2) w_index = N%Ordinates/4
+                                if (N%D == 3) w_index = N%Ordinates/8
 
-                        call Ordinates(ang, N%Angle, mu, mu_val, eta_val, xsi_val)
+                            end if
 
-                        Y_l_m = Calculate_Y_l_m(mu_val,eta_val,xsi_val,l,m)
+                            call Ordinates(ang, N%Angle, mu, mu_val, eta_val, xsi_val)
 
-                        Properties%Elements(i)%Legendre_Flux(g_index,l,m,:) = Properties%Elements(i)%Legendre_Flux(g_index,l,m,:) + (1.0_8/(2.0_8**N%D))*w(w_index)*Y_l_m*Properties%Elements(i)%Flux(g_index,ang,:)
+                            Y_l_m = Calculate_Y_l_m(mu_val,eta_val,xsi_val,l,m)
+
+                            Properties%Elements(i)%Legendre_Flux(g_index,l,m,:) = Properties%Elements(i)%Legendre_Flux(g_index,l,m,:) + (1.0_8/(2.0_8**N%D))*w(w_index)*Y_l_m*Properties%Elements(i)%Flux(g_index,ang,:)
+
+                        end do
 
                     end do
 
@@ -374,31 +390,31 @@ contains
 
             end do
 
-        end do
+            do g_index = 1, N%Group
 
-        do g_index = 1, N%Group
+                do ang = 1, N%Ordinates
 
-            do ang = 1, N%Ordinates
+                    call Ordinates(ang, N%Angle, mu, mu_val, eta_val, xsi_val)
 
-                call Ordinates(ang, N%Angle, mu, mu_val, eta_val, xsi_val)
+                    do l = 1, N%Anisotropy
 
-                do l = 1, N%Anisotropy
+                        do m = 0, l
 
-                    do m = 0, l
+                            Y_l_m = Calculate_Y_l_m(mu_val,eta_val,xsi_val,l,m)
 
-                        Y_l_m = Calculate_Y_l_m(mu_val,eta_val,xsi_val,l,m)
+                            Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*Properties%Elements(i)%Sigma_s(l,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_index,l,m,:))
 
-                        Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*Properties%Elements(i)%Sigma_s(l,g_index,g_index)*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_index,l,m,:))
+                            do g_s_index = g_index,2,-1 ! Upscatter
 
-                        do g_s_index = g_index,2,-1 ! Upscatter
+                                Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*(Properties%Elements(i)%Sigma_s(l,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index-1,l,m,:))
 
-                            Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*(Properties%Elements(i)%Sigma_s(l,g_s_index-1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index-1,l,m,:))
+                            end do
 
-                        end do
+                            do g_s_index = g_index,(N%Group-1) ! Downscatter
 
-                        do g_s_index = g_index,(N%Group-1) ! Downscatter
+                                Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*(Properties%Elements(i)%Sigma_s(l,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index+1,l,m,:))
 
-                            Properties%Elements(i)%Source(g_index,ang,:) = Properties%Elements(i)%Source(g_index,ang,:) + REAL((2.0_8*l + 1),8)*Y_l_m*(Properties%Elements(i)%Sigma_s(l,g_s_index+1,g_index))*matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Legendre_Flux(g_s_index+1,l,m,:))
+                            end do
 
                         end do
 
@@ -464,21 +480,24 @@ contains
 
             Properties%Elements(i)%Scalar_Flux = 0.0_8
 
+        end do
+
+        do ang = 1,N%Ordinates
+
+            if (N%D == 1) w_index = ang
+            if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
+            if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
+
+            if (w_index == 0) then
+
+                if (N%D == 2) w_index = N%Ordinates/4
+                if (N%D == 3) w_index = N%Ordinates/8
+
+            end if
+
             do g_index = 1,N%Group
 
-                do ang = 1,N%Ordinates
-
-                    if (N%D == 1) w_index = ang
-
-                    if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
-                    if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
-
-                    if (w_index == 0) then
-
-                        if (N%D == 2) w_index = N%Ordinates/4
-                        if (N%D == 3) w_index = N%Ordinates/8
-
-                    end if
+                do i = 1,N%Element
 
                     Properties%Elements(i)%Scalar_Flux(g_index,:) = Properties%Elements(i)%Scalar_Flux(g_index,:) + (1.0_8/(2.0_8**N%D))*w(w_index)*Properties%Elements(i)%Flux(g_index,ang,:)
 
@@ -706,6 +725,7 @@ contains
             end do
 
         end do
+        !$OMP END PARALLEL DO
         end if
 
     end subroutine Create_Matrices
@@ -717,9 +737,10 @@ contains
 
         integer :: i, g_index, ang, side_index, neighbour_element
 
-        do g_index = 1, N%Group
+        !$OMP PARALLEL DO PRIVATE(ang,i,g_index,side_index,neighbour_element)
+        do ang = 1, N%Ordinates
 
-            do ang = 1, N%Ordinates
+            do g_index = 1, N%Group
 
                 do i = 1, N%Element
 
@@ -746,6 +767,7 @@ contains
             end do
 
         end do
+        !$OMP END PARALLEL DO
 
     end subroutine Calculate_Boundaries
 

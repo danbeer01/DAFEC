@@ -23,13 +23,12 @@ contains
         type(Mesh)              :: this
 
         integer :: j,k, top_right_loc
+        real :: origin(N%D)
 
         top_right_loc = 1
 
-        ! open (unit=2, file='flux.txt', status='replace', action='write')
 
         do j = 1,N%N
-            ! write(2,*) Results%Scalar_Flux(1,j)
             if(N%D == 1) then
                 if (this%Nodes(j,1) == Prop%Length(1)) top_right_loc = j
             end if
@@ -41,27 +40,39 @@ contains
             end if
         end do
 
+        origin = 0.0
+
+        print *, "*** Response Results ***"
+        print *, " "
+        write(*,110) " Position:", [origin]
+        print *, " "
         do k = 1, N%Group
-            print *, "Group", k, "Flux:"
-            print *, " "
-            write(*,110) " Position", [0.0, 0.0, 0.0]
-            print *, " "
-            print *, "  Flux", Results%Flux(k,1)
-            print *, " "
-            write(*,110) "  Max Flux at Position", this%Nodes((MAXLOC(Results%Flux(k,:))),:)
-            print *, " "
-            print *, "  Flux", MAXVAL(Results%Flux(k,:))
-            print *, " "
-            write(*,110) " Position" , [Prop%Length]
-            110 format (A,F8.4,F8.4,F8.4)
-            print *, " "
-            print *, "  Flux", Results%Flux(k,top_right_loc)
-            print *, " "
+        print *, k, Results%Flux(k,1)
         end do
+        print *, " "
+        print *, "Total ", sum(Results%Flux(:,1))
+        print *, " "
+        write(*,110) " Position:", this%Nodes((MAXLOC(Results%Flux(1,:))),:)
+        print *, " "
+        do k = 1, N%Group
+        print *, k, Results%Flux(k,(MAXLOC(Results%Flux(1,:))))
+        end do
+        print *, " "
+        print *, "Total ", sum(Results%Flux(:,(MAXLOC(Results%Flux(1,:)))))
+        print *, " "
+        write(*,110) " Position:" , [Prop%Length]
+        110 format (A,F8.4,F8.4,F8.4)
+        print *, " "
+        do k = 1, N%Group
+        print *, k, Results%Flux(k,top_right_loc)
+        end do
+        print *, " "
+        print *, "Total ", sum(Results%Flux(:,top_right_loc))
+        print *, " "
 
     end subroutine print_flux_diffusion
 
-    subroutine neutron_balance(Properties, Results, N, this)
+    subroutine neutron_balance_diffusion(Properties, Results, N, this)
 
         type(PropertiesTypeD)   :: Properties
         type(ResultsTypeD)      :: Results
@@ -77,7 +88,10 @@ contains
 
         Element_Flux = 0.0_8
 
-        if (Properties%LBC == 3 .and. Properties%RBC == 3 .and. Properties%BBC == 3 .and. Properties%TBC == 3) alpha = Properties%Alpha
+        print *, "Neutron Balance:"
+        print *, " "
+
+        if (Properties%LBC == 3 .and. Properties%RBC == 3) alpha = Properties%Alpha
 
         do k = 1,N%Group
 
@@ -152,6 +166,8 @@ contains
             
             escaped_total = escaped_total + escaped
             print *, "  Outgoing Current  = ", escaped
+
+            print *, "  Excess Inflow     = ", fission_source + scattered_in - escaped - (absorbed + scattered_out)
             print *, " "
 
         end do
@@ -166,9 +182,9 @@ contains
         end if
         print *, " "
 
-    end subroutine neutron_balance
+    end subroutine neutron_balance_diffusion
 
-    subroutine reaction_rate(Properties, Results, N, this)
+    subroutine reaction_rate_diffusion(Properties, Results, N, this)
 
         type(PropertiesTypeD)   :: Properties
         type(ResultsTypeD)      :: Results
@@ -178,6 +194,8 @@ contains
         real(kind=8), dimension(N%Material) :: Volume, Mean_Flux, fission_rate, absorption_rate
 
         real(kind=8) :: Element_Flux
+
+        integer, dimension(N%Material) :: Number_of_Elements
 
         integer :: i, j, k, a, Nodes_per_Element
 
@@ -190,11 +208,13 @@ contains
             Element_Flux = 0.0_8
             fission_rate = 0.0_8
             absorption_rate = 0.0_8
+            Mean_Flux = 0.0_8
+            Number_of_Elements = 0
 
             print *, "Group", k
             print *, " "
 
-            print *, "   Material   ", " Volume   ", "                   Mean Flux   ", "              Absorption Rate   ", "        Fission Rate"
+            print *, "   Material   ", " No. of Elements", "        Volume   ", "                 Mean Flux   ", "              Absorption Rate   ", "        Fission Rate"
             print *, " "
 
             do j = 1, N%Material
@@ -221,17 +241,19 @@ contains
 
                         Volume(j) = Volume(j) + Properties%Elements(i)%Volume
 
+                        Number_of_Elements(j) = Number_of_Elements(j) + 1
+
                     end if
 
                 end do
 
-                Mean_Flux(j) = Mean_Flux(j)/Volume(j)
+                if (Volume(j) > 0.0_8) Mean_Flux(j) = Mean_Flux(j)/Volume(j)
 
             end do
 
             do j = 1, N%Material
 
-                print *, j, Volume(j), Mean_Flux(j), absorption_rate(j), fission_rate(j)
+                print *, j, Number_of_Elements(j), '           ',Volume(j), Mean_Flux(j), absorption_rate(j), fission_rate(j)
 
             end do
 
@@ -239,6 +261,6 @@ contains
 
         end do
 
-    end subroutine reaction_rate
+    end subroutine reaction_rate_diffusion
 
 end module
