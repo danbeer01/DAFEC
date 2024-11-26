@@ -49,6 +49,17 @@ contains
             mu(6) = 0.8319966_8
             mu(7) = 0.9092855_8
             mu(8) = 0.9805009_8
+          else if (N_Angles == 20) then
+            mu(1) = 0.1206033_8
+            mu(2) = 0.3475743_8
+            mu(3) = 0.4765193_8
+            mu(4) = 0.5773503_8
+            mu(5) = 0.6630204_8
+            mu(6) = 0.7388226_8
+            mu(7) = 0.8075404_8
+            mu(8) = 0.8708526_8
+            mu(9) = 0.9298639_8
+            mu(10) = 0.9853475_8
           else
             write(*,*) 'Error: Number of Angles not supported'
             stop
@@ -117,6 +128,27 @@ contains
           xsi(14) = -0.8319966_8
           xsi(15) = -0.9092855_8
           xsi(16) = -0.9805009_8
+        else if (N_Angles == 20) then
+          xsi(1) = 0.9853475_8
+          xsi(2) = 0.9298639_8
+          xsi(3) = 0.8708526_8
+          xsi(4) = 0.8075404_8
+          xsi(5) = 0.7388226_8
+          xsi(6) = 0.6630204_8
+          xsi(7) = 0.5773503_8
+          xsi(8) = 0.4765193_8
+          xsi(9) = 0.3475743_8
+          xsi(10) = 0.1206033_8
+          xsi(11) = -0.1206033_8
+          xsi(12) = -0.3475743_8
+          xsi(13) = -0.4765193_8
+          xsi(14) = -0.5773503_8
+          xsi(15) = -0.6630204_8
+          xsi(16) = -0.7388226_8
+          xsi(17) = -0.8075404_8
+          xsi(18) = -0.8708526_8
+          xsi(19) = -0.9298639_8
+          xsi(20) = -0.9853475_8
         else
           write(*,*) 'Error: Number of Angles not supported'
           stop
@@ -130,6 +162,7 @@ contains
 
         integer                   :: N_Angles
         real(kind=8), intent(out) :: w(:)
+        real(kind=8)              :: w_array(11)
 
         N_Angles = NINT(SQRT(1.0 + 8*REAL(size(w))) - 1)
 
@@ -214,7 +247,85 @@ contains
             w(34) = 0.0413296_8
             w(35) = 0.0413296_8
             w(36) = 0.0489872_8
-          else
+        else if (N_Angles == 20) then
+            w_array(1) = 0.0370210_8
+            w_array(2) = 0.0332842_8
+            w_array(3) = 0.0139671_8
+            w_array(4) = 0.0230923_8
+            w_array(5) = 0.0122247_8
+            w_array(6) = 0.0262116_8
+            w_array(7) = 0.0082803_8
+            w_array(8) = 0.032288367_8
+            w_array(9) = 0.005226867_8
+            w_array(10) = 0.000746933_8
+            w_array(11) = 0.0356226_8
+
+            w(1) = 0.0370210_8
+            w(2) = 0.0332842_8
+            w(3) = 0.0139671_8
+            w(4) = 0.0230923_8
+            w(5) = 0.0122247_8
+            w(6) = 0.0122247_8
+            w(7) = 0.0230923_8
+            w(8) = 0.0139671_8
+            w(9) = 0.0332842_8
+            w(10) = 0.0370210_8
+
+            w(11) = w_array(2)
+            w(12) = w_array(6)
+            w(13) = w_array(7)
+            w(14) = w_array(8)
+            w(15) = w_array(9)
+            w(16) = w_array(8)
+            w(17) = w_array(7)
+            w(18) = w_array(6)
+            w(19) = w_array(2)
+
+            w(20) = w_array(3)
+            w(21) = w_array(7)
+            w(22) = w_array(9)
+            w(23) = w_array(10)
+            w(24) = w_array(10)
+            w(25) = w_array(9)
+            w(26) = w_array(7)
+            w(27) = w_array(3)
+
+            w(28) = w_array(4)
+            w(29) = w_array(8)
+            w(30) = w_array(10)
+            w(31) = w_array(11)
+            w(32) = w_array(10)
+            w(33) = w_array(8)
+            w(34) = w_array(4)
+
+            w(35) = w_array(5)
+            w(36) = w_array(9)
+            w(37) = w_array(10)
+            w(38) = w_array(10)
+            w(39) = w_array(9)
+            w(40) = w_array(5)
+
+            w(41) = w_array(5)
+            w(42) = w_array(8)
+            w(43) = w_array(9)
+            w(44) = w_array(8)
+            w(45) = w_array(5)
+
+            w(46) = w_array(4)
+            w(47) = w_array(7)
+            w(48) = w_array(7)
+            w(49) = w_array(4)
+
+            w(50) = w_array(3)
+            w(51) = w_array(6)
+            w(52) = w_array(3)
+
+            w(53) = w_array(2)
+            w(54) = w_array(2)
+
+            w(55) = w_array(1)
+
+        else
             write(*,*) 'Error: Number of angles not supported', N_Angles
             stop
         end if

@@ -48,6 +48,7 @@ contains
         real(kind = 8)                      :: lambda_old = 1.1_8, lambda_new = 1.0_8
 
         integer, dimension(N%Ordinates,N%Element) :: Sweep_Order
+        real(kind = 8), dimension(N%Ordinates)    :: w
 
         integer                             :: max_iter = 10000 ! maximum number of iterations
         real(kind = 8)                      :: tol = 1.0e-8 ! tolerance for convergence
@@ -77,6 +78,8 @@ contains
         if (N%D == 1) call Determine_Sweep_Order_1D(Properties, N, Sweep_Order)
         if (N%D == 2) call Determine_Sweep_Order_2D(Properties, N, Sweep_Order)
         if (N%D == 3) call Determine_Sweep_Order_3D(Properties, N, Sweep_Order)
+
+        call Calculate_w_indices(N, w)
 
         ! Set the initial flux guesses and initialise the sources
         do i = 1,N%Element
@@ -162,7 +165,7 @@ contains
             end do
             !$OMP END PARALLEL DO
 
-            call Calculate_Scalar_Flux(Properties, N)
+            call Calculate_Scalar_Flux(Properties, N, w)
 
             ! Calculate the source terms for each element
             call Calculate_Source(Properties, N, lambda_new)
@@ -463,22 +466,14 @@ contains
 
     end subroutine Up_Wind_Source
 
-    subroutine Calculate_Scalar_Flux(Properties, N)
+    subroutine Calculate_Scalar_Flux(Properties, N, w)
 
         type(PropertiesType), intent(inout) :: Properties
         type(NType), intent(in)             :: N
 
-        integer :: i, g_index, ang, w_index
+        integer :: i, g_index, ang
 
-        real(kind = 8), dimension(:), allocatable :: w
-
-        if (N%D == 1) allocate(w(N%Ordinates))
-        if (N%D == 2) allocate(w(N%Ordinates/4))
-        if (N%D == 3) allocate(w(N%Ordinates/8))
-
-        if (N%D == 1) call Calculate_w_1D(w)
-        if (N%D == 2) call Calculate_w(w)
-        if (N%D == 3) call Calculate_w(w)
+        real(kind = 8), dimension(:) :: w
 
         do i = 1,N%Element
 
@@ -488,22 +483,11 @@ contains
 
         do ang = 1,N%Ordinates
 
-            if (N%D == 1) w_index = ang
-            if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
-            if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
+            do i = 1,N%Element
 
-            if (w_index == 0) then
+                do g_index = 1,N%Group
 
-                if (N%D == 2) w_index = N%Ordinates/4
-                if (N%D == 3) w_index = N%Ordinates/8
-
-            end if
-
-            do g_index = 1,N%Group
-
-                do i = 1,N%Element
-
-                    Properties%Elements(i)%Scalar_Flux(g_index,:) = Properties%Elements(i)%Scalar_Flux(g_index,:) + (1.0_8/(2.0_8**N%D))*w(w_index)*Properties%Elements(i)%Flux(g_index,ang,:)
+                    Properties%Elements(i)%Scalar_Flux(g_index,:) = Properties%Elements(i)%Scalar_Flux(g_index,:) + (1.0_8/(2.0_8**N%D))*w(ang)*Properties%Elements(i)%Flux(g_index,ang,:)
 
                 end do
 
@@ -774,5 +758,42 @@ contains
         !$OMP END PARALLEL DO
 
     end subroutine Calculate_Boundaries
+
+    subroutine Calculate_w_indices(N, w_values)
+
+        type(NType), intent(in) :: N
+
+        integer :: ang, w_index
+
+        real(kind = 8), dimension(:), allocatable :: w
+
+        real(kind = 8), dimension(N%Ordinates) :: w_values
+
+        if (N%D == 1) allocate(w(N%Ordinates))
+        if (N%D == 2) allocate(w(N%Ordinates/4))
+        if (N%D == 3) allocate(w(N%Ordinates/8))
+
+        if (N%D == 1) call Calculate_w_1D(w)
+        if (N%D == 2) call Calculate_w(w)
+        if (N%D == 3) call Calculate_w(w)
+
+        do ang = 1,N%Ordinates
+
+            if (N%D == 1) w_index = ang
+            if (N%D == 2) w_index = MOD(ang,N%Ordinates/4)
+            if (N%D == 3) w_index = MOD(ang,N%Ordinates/8)
+
+            if (w_index == 0) then
+
+                if (N%D == 2) w_index = N%Ordinates/4
+                if (N%D == 3) w_index = N%Ordinates/8
+
+            end if
+
+            w_values(ang) = w(w_index)
+
+        end do
+
+    end subroutine Calculate_w_indices
 
 end module m_Solver
