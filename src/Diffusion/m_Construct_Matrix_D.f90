@@ -33,6 +33,7 @@ contains
 
         integer, dimension(:,:), allocatable :: Periodic_Pairs
 
+        if(N%D == 1) call Calculate_Isoparametric_Linear_Coordinates(N%Degree, Properties)
         if(N%D == 2) call Calculate_Isoparametric_Quadrilateral_Coordinates(N%Degree, Properties)
         if(N%D == 3) call Calculate_Isoparametric_Hexahedral_Coordinates(N%Degree, Properties)
 

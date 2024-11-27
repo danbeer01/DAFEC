@@ -144,6 +144,8 @@ contains
 
             end do
 
+            print *, "  Outgoing Current  = ", escaped
+
             source_total = source_total + fission_source + scattered_in
             print *, "  Source Input      = ", fission_source + scattered_in
 

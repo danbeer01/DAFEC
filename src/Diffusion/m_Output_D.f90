@@ -84,7 +84,7 @@ contains
         real(kind=8) :: escaped = 0.0_8, escaped_total = 0.0_8, incoming_total = 0.0_8
         real(kind=8) :: alpha = 0.0_8
         real(kind=8), dimension(N%Group,N%Element) :: Element_Flux
-        integer :: i, j, k, Nodes_per_Element
+        integer :: i, j, k
 
         Element_Flux = 0.0_8
 
@@ -96,31 +96,29 @@ contains
         do k = 1,N%Group
 
             do i = 1,N%Element
-    
-                Nodes_per_Element = size(Properties%Elements(i)%Coordinates,1)
-    
-                do j = 1, Nodes_per_Element
-    
-                    Element_Flux(k,i) = Element_Flux(k,i) + (Results%Flux(k,this%Cell_Pointers(i,j)))/Nodes_per_Element
-    
+
+                do j = 1, Properties%Elements(i)%Number_of_Nodes
+
+                    Element_Flux(k,i) = Element_Flux(k,i) + (Results%Flux(k,this%Cell_Pointers(i,j)))/Properties%Elements(i)%Number_of_Nodes
+
                 end do
 
             end do
-    
+
         end do
 
         do k = 1, N%Group
+
             fission_source = 0.0_8
             absorbed = 0.0_8
             scattered_out = 0.0_8
             scattered_in = 0.0_8
+            escaped = 0.0_8
 
             print *, " Group", k
             print *, " "
 
             do i = 1, N%Element
-
-                Nodes_per_Element = Properties%Elements(i)%Number_of_Nodes
 
                 do j = 1, N%Group
 

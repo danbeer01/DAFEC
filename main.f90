@@ -42,7 +42,7 @@ call timer%start_timer()
 call timer%Startdate()
 
 ! Open VTK file
-! open(unit=1, file='vtk/1D/O1_line_3.vtk', status='old', action='read')
+open(unit=1, file='vtk/1D/O8_line.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/reed_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/3_Region_Sphere.vtk', status='old', action='read')
 
@@ -57,13 +57,13 @@ call timer%Startdate()
 ! open(unit=1, file='vtk/2D/O4_quad.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O5_quad_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O8_quad.vtk', status='old', action='read')
-open(unit=1, file='vtk/2D/C5G2_2.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/C5G2_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Ackroyd.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Cylinder.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/LWR.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/mixed_mesh.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/C5G7_2.vtk', status='old', action='read')
-! open(unit=1, file='vtk/2D/C5G7vol_1_1_f.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/C5G7vol_2_2_f.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Curvilinear.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/pincell_1_2.vtk', status='old', action='read')
 
@@ -85,14 +85,14 @@ open(unit=1, file='vtk/2D/C5G2_2.vtk', status='old', action='read')
 call vtk_mesh%read_VTK_file()
 
 ! Open input file for material and other data data
-! open(unit=1, file='inputs/homo.txt', status='old', action='read')
+open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/hetero.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/reed.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/sood_3.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/3_Region_Sphere.txt', status='old', action='read')
 
-open(unit=1, file='inputs/Benchmarks/c5g2.txt', status='old', action='read')
+! open(unit=1, file='inputs/Benchmarks/c5g2.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/Ackroyd.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/cylinder.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/LWR.txt', status='old', action='read')

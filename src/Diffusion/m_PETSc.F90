@@ -130,10 +130,10 @@ contains
     call VecSetValues(this%PETSc(Group_index)%b, n, this%indices, d, INSERT_VALUES, ierr)
     call VecAssemblyBegin(this%PETSc(Group_index)%b, ierr)
     call VecAssemblyEnd(this%PETSc(Group_index)%b, ierr)
-    !call VecView(this%PETSc(Group_index)%b, PETSC_VIEWER_STDOUT_WORLD, ierr)
+    ! call VecView(this%PETSc(Group_index)%b, PETSC_VIEWER_STDOUT_WORLD, ierr)
 
     call KSPSetType(this%PETSc(Group_index)%ksp, KSPCG, ierr)
-    ! call KSPView(this%ksp(Group_index), PETSC_VIEWER_STDOUT_SELF, ierr)
+    ! call KSPView(this%PETSc(Group_index)%ksp, PETSC_VIEWER_STDOUT_SELF, ierr)
     call KSPSolve(this%PETSc(Group_index)%ksp,this%PETSc(Group_index)%b,this%PETSc(Group_index)%x,ierr)
     call KSPGetIterationNumber(this%PETSc(Group_index)%ksp, its, ierr);
 

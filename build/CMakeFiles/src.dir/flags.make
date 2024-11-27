@@ -6,5 +6,5 @@ Fortran_DEFINES =
 
 Fortran_INCLUDES = -I/home/daniel/Documents/apps/include
 
-Fortran_FLAGS =  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp 
+Fortran_FLAGS =  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp 
 

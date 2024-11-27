@@ -1,242 +1,242 @@
 [
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/C_timer.f90 -o CMakeFiles/src.dir/src/C_timer.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/C_timer.f90 -o CMakeFiles/src.dir/src/C_timer.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/C_timer.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Constants_Mod.f90 -o CMakeFiles/src.dir/src/m_Constants_Mod.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Constants_Mod.f90 -o CMakeFiles/src.dir/src/m_Constants_Mod.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/m_Constants_Mod.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Determine_Solve_Method.f90 -o CMakeFiles/src.dir/src/m_Determine_Solve_Method.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Determine_Solve_Method.f90 -o CMakeFiles/src.dir/src/m_Determine_Solve_Method.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/m_Determine_Solve_Method.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Gauss_Points.f90 -o CMakeFiles/src.dir/src/m_Gauss_Points.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_Gauss_Points.f90 -o CMakeFiles/src.dir/src/m_Gauss_Points.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/m_Gauss_Points.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_VTK_Reader.f90 -o CMakeFiles/src.dir/src/m_VTK_Reader.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/m_VTK_Reader.f90 -o CMakeFiles/src.dir/src/m_VTK_Reader.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/m_VTK_Reader.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Read_Properties.f90 -o CMakeFiles/src.dir/src/Transport/m_Read_Properties.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Read_Properties.f90 -o CMakeFiles/src.dir/src/Transport/m_Read_Properties.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Read_Properties.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Results.f90 -o CMakeFiles/src.dir/src/Transport/m_Results.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Results.f90 -o CMakeFiles/src.dir/src/Transport/m_Results.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Results.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Small_Matrix_Solver.f90 -o CMakeFiles/src.dir/src/Transport/m_Small_Matrix_Solver.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Small_Matrix_Solver.f90 -o CMakeFiles/src.dir/src/Transport/m_Small_Matrix_Solver.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Small_Matrix_Solver.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Normalisation.f90 -o CMakeFiles/src.dir/src/Transport/m_Normalisation.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Normalisation.f90 -o CMakeFiles/src.dir/src/Transport/m_Normalisation.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Normalisation.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Hexahedral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Hexahedral_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Hexahedral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Hexahedral_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Hexahedral_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Tetrahedral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Tetrahedral_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Tetrahedral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Tetrahedral_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Tetrahedral_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Prismatic_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Prismatic_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Prismatic_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Prismatic_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Prismatic_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Pyramidal_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Pyramidal_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Pyramidal_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Pyramidal_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Pyramidal_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Quadrilateral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Quadrilateral_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Quadrilateral_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Quadrilateral_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Quadrilateral_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Triangular_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Triangular_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Triangular_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Triangular_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Triangular_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Shape_Functions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Create_Shape_Functions.f90 -o CMakeFiles/src.dir/src/Transport/m_Create_Shape_Functions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Create_Shape_Functions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_1D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_1D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_1D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_1D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_1D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_2D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_2D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_2D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_2D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_2D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_3D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_3D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_3D.f90 -o CMakeFiles/src.dir/src/Transport/m_Construct_Matrix_3D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Construct_Matrix_3D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Calculate_mu_w.f90 -o CMakeFiles/src.dir/src/Transport/m_Calculate_mu_w.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Calculate_mu_w.f90 -o CMakeFiles/src.dir/src/Transport/m_Calculate_mu_w.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Calculate_mu_w.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Calculate_Curvilinear_Normals.f90 -o CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Calculate_Curvilinear_Normals.f90 -o CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Calculate_Curvilinear_Normals.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_1D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_1D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_1D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_1D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_2D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_2D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_2D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_3D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_3D.f90 -o CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Sweep_Order_3D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Boundary_Conditions.f90 -o CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Boundary_Conditions.f90 -o CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Boundary_Conditions.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Cylindrical.f90 -o CMakeFiles/src.dir/src/Transport/m_Cylindrical.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Cylindrical.f90 -o CMakeFiles/src.dir/src/Transport/m_Cylindrical.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Cylindrical.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Spherical.f90 -o CMakeFiles/src.dir/src/Transport/m_Spherical.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Spherical.f90 -o CMakeFiles/src.dir/src/Transport/m_Spherical.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Spherical.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_RZ.f90 -o CMakeFiles/src.dir/src/Transport/m_RZ.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_RZ.f90 -o CMakeFiles/src.dir/src/Transport/m_RZ.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_RZ.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Solver.f90 -o CMakeFiles/src.dir/src/Transport/m_Solver.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Solver.f90 -o CMakeFiles/src.dir/src/Transport/m_Solver.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Solver.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Output.f90 -o CMakeFiles/src.dir/src/Transport/m_Output.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_Output.f90 -o CMakeFiles/src.dir/src/Transport/m_Output.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_Output.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_VTK_Writer.f90 -o CMakeFiles/src.dir/src/Transport/m_VTK_Writer.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Transport/m_VTK_Writer.f90 -o CMakeFiles/src.dir/src/Transport/m_VTK_Writer.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Transport/m_VTK_Writer.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Read_Properties_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Read_Properties_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Read_Properties_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Read_Properties_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Read_Properties_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Boundary_Conditions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Boundary_Conditions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Boundary_Conditions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Boundary_Conditions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Boundary_Conditions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Results_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Results_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Results_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Results_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Results_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_PETSc.F90 -o CMakeFiles/src.dir/src/Diffusion/m_PETSc.F90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_PETSc.F90 -o CMakeFiles/src.dir/src/Diffusion/m_PETSc.F90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_PETSc.F90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Normalisation_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Normalisation_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Normalisation_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Normalisation_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Normalisation_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Hexahedral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Hexahedral_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Hexahedral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Hexahedral_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Hexahedral_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Tetrahedral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Tetrahedral_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Tetrahedral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Tetrahedral_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Tetrahedral_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Prismatic_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Prismatic_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Prismatic_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Prismatic_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Prismatic_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Pyramidal_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Pyramidal_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Pyramidal_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Pyramidal_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Pyramidal_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Quadrilateral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Quadrilateral_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Quadrilateral_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Quadrilateral_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Quadrilateral_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Triangular_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Triangular_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Triangular_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Triangular_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Triangular_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Shape_Functions_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Shape_Functions_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Create_Shape_Functions_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Create_Shape_Functions_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Construct_Matrix_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Construct_Matrix_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Construct_Matrix_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Construct_Matrix_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Construct_Matrix_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Solver_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Solver_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Solver_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Solver_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Output_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Output_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_Output_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_Output_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_Output_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_VTK_Writer_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_VTK_Writer_D.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/src/Diffusion/m_VTK_Writer_D.f90 -o CMakeFiles/src.dir/src/Diffusion/m_VTK_Writer_D.f90.o",
   "file": "/home/daniel/Documents/DAFEC/src/Diffusion/m_VTK_Writer_D.f90"
 },
 {
   "directory": "/home/daniel/Documents/DAFEC/build",
-  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  -c /home/daniel/Documents/DAFEC/main.f90 -o CMakeFiles/out.dir/main.f90.o",
+  "command": "/usr/bin/f95  -I/home/daniel/Documents/apps/include  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  -c /home/daniel/Documents/DAFEC/main.f90 -o CMakeFiles/out.dir/main.f90.o",
   "file": "/home/daniel/Documents/DAFEC/main.f90"
 }
 ]
