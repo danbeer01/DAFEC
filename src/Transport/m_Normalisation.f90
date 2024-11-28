@@ -28,7 +28,7 @@ contains
 
     real(kind=8) :: R
 
-    integer :: k, i
+    integer :: k, i, side_index
 
     Norm = 0
     
@@ -73,6 +73,12 @@ contains
         Properties%Elements(i)%Scalar_Flux = Properties%Elements(i)%Scalar_Flux / Norm
 
         Properties%Elements(i)%Flux = Properties%Elements(i)%Flux / Norm
+
+        do side_index = 1,Properties%Elements(i)%Number_of_Sides
+
+            Properties%Elements(i)%Sides(side_index)%Boundary= Properties%Elements(i)%Sides(side_index)%Boundary / Norm
+
+        end do
 
     end do
     

@@ -46,7 +46,7 @@ call timer%Startdate()
 ! open(unit=1, file='vtk/1D/reed_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/3_Region_Sphere.vtk', status='old', action='read')
 
-open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Tri_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/quad.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O1_tri_2.vtk', status='old', action='read')
@@ -63,9 +63,11 @@ open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/LWR.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/mixed_mesh.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/C5G7_2.vtk', status='old', action='read')
-! open(unit=1, file='vtk/2D/C5G7vol_2_2_f.vtk', status='old', action='read')
+open(unit=1, file='vtk/2D/C5G7vol_2_2_f.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Curvilinear.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/pincell_1_2.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/square_2_2_f.vtk', status='old', action='read')
+
 
 ! open(unit=1, file='vtk/3D/Cube_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/O1_cube.vtk', status='old', action='read')
@@ -85,7 +87,7 @@ open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 call vtk_mesh%read_VTK_file()
 
 ! Open input file for material and other data data
-open(unit=1, file='inputs/homo.txt', status='old', action='read')
+! open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/hetero.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/reed.txt', status='old', action='read')
@@ -96,7 +98,7 @@ open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/Ackroyd.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/cylinder.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/LWR.txt', status='old', action='read')
-! open(unit=1, file='inputs/Benchmarks/c5g7_3.txt', status='old', action='read')
+open(unit=1, file='inputs/Benchmarks/c5g7_3.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/Takeda.txt', status='old', action='read')
 

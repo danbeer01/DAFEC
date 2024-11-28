@@ -79,7 +79,7 @@ contains
         type(NTypeD)            :: N
 
         real(kind=8) :: fission_source = 0.0_8, source_total = 0.0_8
-        real(kind=8) :: absorbed = 0.0_8, removed_total = 0.0_8, scattered_out = 0.0_8, scattered_in = 0.0_8
+        real(kind=8) :: removed = 0.0_8, removed_total = 0.0_8, scattered_in = 0.0_8
         real(kind=8) :: escaped = 0.0_8, escaped_total = 0.0_8, incoming_total = 0.0_8
         real(kind=8) :: alpha = 0.0_8
         integer :: i, j, k
@@ -92,8 +92,7 @@ contains
         do k = 1, N%Group
 
             fission_source = 0.0_8
-            absorbed = 0.0_8
-            scattered_out = 0.0_8
+            removed = 0.0_8
             scattered_in = 0.0_8
             escaped = 0.0_8
 
@@ -120,13 +119,7 @@ contains
 
                 end do
 
-                absorbed = absorbed + sum(matmul(Properties%Elements(i)%Sigma_r(k)*Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
-
-                do j = 1, N%Group
-
-                    if(j /= k) scattered_out = scattered_out + Properties%Elements(i)%Sigma_s(k,j)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(j,:)))
-
-                end do
+                removed = removed + Properties%Elements(i)%Sigma_r(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
                 escaped = escaped + sum(matmul(((1.0_8/(3.0_8*Properties%Elements(i)%Sigma_t(k)))*Properties%Elements(i)%D_Matrix + Properties%Elements(i)%B_Matrix),Properties%Elements(i)%Flux(k,:)))
 
@@ -135,8 +128,8 @@ contains
             source_total = source_total + fission_source + scattered_in
             print *, "  Source Input      = ", fission_source + scattered_in
 
-            removed_total = removed_total + absorbed + scattered_out
-            print *, "  Removal Rate      = ", absorbed + scattered_out
+            removed_total = removed_total + removed
+            print *, "  Removal Rate      = ", removed
 
             print *, "  Incoming Current  = ", escaped*alpha/(1+alpha)
 
@@ -148,7 +141,7 @@ contains
             escaped_total = escaped_total + escaped
             print *, "  Outgoing Current  = ", escaped
 
-            print *, "  Excess Inflow     = ", fission_source + scattered_in - escaped - (absorbed + scattered_out)
+            print *, "  Excess Inflow     = ", fission_source + scattered_in - escaped - removed
             print *, " "
 
         end do
@@ -197,14 +190,14 @@ contains
             do j = 1, N%Material
             
                 do i = 1, N%Element
-                    
+
                     if (Properties%Elements(i)%Material == j) then
 
                         fission_rate(j) = fission_rate(j) + (1/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
                         absorption_rate(j) = absorption_rate(j) + Properties%Elements(i)%Sigma_a(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
-                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))*Properties%Elements(i)%Volume/Properties%Elements(i)%Number_of_Nodes
+                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))/Properties%Elements(i)%Number_of_Nodes
 
                         Volume(j) = Volume(j) + Properties%Elements(i)%Volume
 

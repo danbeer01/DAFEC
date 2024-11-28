@@ -63,6 +63,12 @@ contains
     end do
 
     Results%Flux = Results%Flux / Norm
+
+    do i = 1, N%Element
+
+        Properties%Elements(i)%Flux = Properties%Elements(i)%Flux / Norm
+
+    end do
     
     end subroutine normalisation
 

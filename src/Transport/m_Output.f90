@@ -133,11 +133,11 @@ contains
 
                 end do
 
-                absorbed = absorbed + Properties%Elements(i)%Sigma_a(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(j,:)))
+                absorbed = absorbed + Properties%Elements(i)%Sigma_a(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(k,:)))
 
                 do j = 1, N%Group
 
-                    if(j /= k) scattered_out = scattered_out + Properties%Elements(i)%Sigma_s(0,k,j)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(j,:)))
+                    if(j /= k) scattered_out = scattered_out + Properties%Elements(i)%Sigma_s(0,k,j)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(k,:)))
 
                 end do
 
