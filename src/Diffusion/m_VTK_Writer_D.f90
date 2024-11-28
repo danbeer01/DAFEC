@@ -123,7 +123,7 @@ contains
         integer, allocatable :: New_Cell_Pointers(:,:)
         integer, allocatable :: Node_Numberings(:,:)
 
-        open(6, file = 'vtk_out.vtk', status = 'replace', action = 'write')
+        open(6, file = '../DAFEC_Results/vtk_out.vtk', status = 'replace', action = 'write')
 
         write(6,1) "# vtk DataFile Version 2.0"
         write(6,2) "outputfile"
