@@ -28,25 +28,9 @@ contains
 
     real(kind=8) :: R
 
-    real(kind=8), dimension(N%Group,N%Element) :: Element_Scalar_Flux
-
     integer :: k, i
 
     Norm = 0
-
-    Element_Scalar_Flux = 0.0_8
-
-    do k = 1,N%Group
-
-        do i = 1,N%Element
-
-            Element_Scalar_Flux(k,i) = sum(Properties%Elements(i)%Scalar_Flux(k,:))
-
-            Element_Scalar_Flux(k,i) = Element_Scalar_Flux(k,i) / Properties%Elements(i)%Number_of_Nodes
-
-        end do
-
-    end do
     
     do i = 1,N%Element
 
@@ -68,11 +52,11 @@ contains
 
             if (Properties%Adjoint == 0) then
 
-                Norm = Norm + (1.0_8/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*Element_Scalar_Flux(k,i)*Properties%Elements(i)%Volume
+                Norm = Norm + (1.0_8/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(k,:)))
 
             else if (Properties%Adjoint == 1) then
 
-                Norm = Norm + Element_Scalar_Flux(k,i)*Properties%Elements(i)%Volume
+                Norm = Norm + sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Scalar_Flux(k,:)))
 
             end if
 

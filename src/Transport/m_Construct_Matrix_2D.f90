@@ -46,6 +46,8 @@ contains
 
         end if
 
+        Properties%Elements(i)%F_out_Matrix(ang,:,:) = F_out
+
         Properties%Elements(i)%K_Matrix(g_index,ang,:,:) = -Properties%Elements(i)%S_Matrix(ang,:,:) + Properties%Elements(i)%Sigma_t(g_index)*Properties%Elements(i)%A_Matrix + F_out
 
     end subroutine Construct_Total_Matrix_2D

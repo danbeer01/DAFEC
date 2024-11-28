@@ -56,6 +56,7 @@ type :: ElementType
     real(kind=8), dimension(:,:,:,:), allocatable :: K_Matrix
     real(kind=8), dimension(:,:), allocatable     :: A_Matrix
     real(kind=8), dimension(:,:,:), allocatable   :: S_Matrix
+    real(kind=8), dimension(:,:,:), allocatable   :: F_out_Matrix
     real(kind=8), dimension(:,:,:), allocatable   :: Source
     real(kind=8), dimension(:,:,:), allocatable   :: Sweep_Source
     real(kind=8), dimension(:,:,:), allocatable   :: Total_Source
@@ -175,6 +176,7 @@ subroutine Read_Properties(Properties, N, this)
         allocate(Properties%Elements(i)%Flux(N%Group,N%Ordinates,this%N_Cell_Pointers(i)))
         allocate(Properties%Elements(i)%Legendre_Flux(N%Group,0:N%Anisotropy,0:N%Anisotropy,this%N_Cell_Pointers(i)))
         allocate(Properties%Elements(i)%S_Matrix(N%Ordinates,this%N_Cell_Pointers(i),this%N_Cell_Pointers(i)))
+        allocate(Properties%Elements(i)%F_out_Matrix(N%Ordinates,this%N_Cell_Pointers(i),this%N_Cell_Pointers(i)))
         allocate(Properties%Elements(i)%A_Matrix(this%N_Cell_Pointers(i),this%N_Cell_Pointers(i)))
         if (this%Cell_Type(i) == 3 .or. this%Cell_Type(i) == 21) then
 

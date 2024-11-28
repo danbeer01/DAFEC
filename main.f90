@@ -42,16 +42,16 @@ call timer%start_timer()
 call timer%Startdate()
 
 ! Open VTK file
-open(unit=1, file='vtk/1D/O8_line.vtk', status='old', action='read')
+! open(unit=1, file='vtk/1D/O1_line.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/reed_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/3_Region_Sphere.vtk', status='old', action='read')
 
-! open(unit=1, file='vtk/2D/Squares_3.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Tri_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/quad.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O1_tri_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/tri_linear.vtk', status='old', action='read')
-! open(unit=1, file='vtk/2D/quad_linear.vtk', status='old', action='read')
+open(unit=1, file='vtk/2D/quad_linear.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O2_tri.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O3_tri.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O4_quad.vtk', status='old', action='read')
@@ -117,12 +117,12 @@ call timer%solve()
 
 ! Output flux and k_eff
 if(Solve_Transport_Method) then
-    call neutron_balance(Properties, Results, N)
-    call reaction_rate(Properties, Results, N, vtk_mesh)
+    if(Properties%Case == 1) call neutron_balance(Properties, Results, N)
+    if(Properties%Case == 1) call reaction_rate(Properties, Results, N)
     call print_flux(Properties, Results, N, vtk_mesh)
 else
-    call neutron_balance_diffusion(PropertiesD, ResultsD, N_D, vtk_mesh)
-    call reaction_rate_diffusion(PropertiesD, ResultsD, N_D, vtk_mesh)
+    if(PropertiesD%Case == 1) call neutron_balance_diffusion(PropertiesD, ResultsD, N_D)
+    if(PropertiesD%Case == 1) call reaction_rate_diffusion(PropertiesD, ResultsD, N_D)
     call print_flux_diffusion(PropertiesD, ResultsD, N_D, vtk_mesh)
 end if
 

@@ -72,40 +72,22 @@ contains
 
     end subroutine print_flux_diffusion
 
-    subroutine neutron_balance_diffusion(Properties, Results, N, this)
+    subroutine neutron_balance_diffusion(Properties, Results, N)
 
         type(PropertiesTypeD)   :: Properties
         type(ResultsTypeD)      :: Results
         type(NTypeD)            :: N
-        type(Mesh)              :: this
 
         real(kind=8) :: fission_source = 0.0_8, source_total = 0.0_8
         real(kind=8) :: absorbed = 0.0_8, removed_total = 0.0_8, scattered_out = 0.0_8, scattered_in = 0.0_8
         real(kind=8) :: escaped = 0.0_8, escaped_total = 0.0_8, incoming_total = 0.0_8
         real(kind=8) :: alpha = 0.0_8
-        real(kind=8), dimension(N%Group,N%Element) :: Element_Flux
         integer :: i, j, k
-
-        Element_Flux = 0.0_8
 
         print *, "Neutron Balance:"
         print *, " "
 
         if (Properties%LBC == 3 .and. Properties%RBC == 3) alpha = Properties%Alpha
-
-        do k = 1,N%Group
-
-            do i = 1,N%Element
-
-                do j = 1, Properties%Elements(i)%Number_of_Nodes
-
-                    Element_Flux(k,i) = Element_Flux(k,i) + (Results%Flux(k,this%Cell_Pointers(i,j)))/Properties%Elements(i)%Number_of_Nodes
-
-                end do
-
-            end do
-
-        end do
 
         do k = 1, N%Group
 
@@ -122,29 +104,31 @@ contains
 
                 do j = 1, N%Group
 
-                    fission_source = fission_source + (1/Results%k_eff)*Properties%Chi(k)*Properties%Elements(i)%Sigma_f(j)*Properties%Elements(i)%Volume*Element_Flux(j,i)
+                    fission_source = fission_source + (1/Results%k_eff)*Properties%Chi(k)*Properties%Elements(i)%Sigma_f(j)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(j,:)))
 
                 end do
 
                 do j = k,2,-1 ! Upscatter
 
-                    scattered_in = scattered_in + Properties%Elements(i)%Sigma_s(j-1,k)*Element_Flux(j-1,i)*Properties%Elements(i)%Volume
+                    scattered_in = scattered_in + Properties%Elements(i)%Sigma_s(j-1,k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(j-1,:)))
 
                 end do
 
                 do j = k,N%Group-1 ! Downscatter
 
-                    scattered_in = scattered_in + Properties%Elements(i)%Sigma_s(j+1,k)*Element_Flux(j+1,i)*Properties%Elements(i)%Volume
+                    scattered_in = scattered_in + Properties%Elements(i)%Sigma_s(j+1,k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(j+1,:)))
 
                 end do
 
-                absorbed = absorbed + Properties%Elements(i)%Sigma_a(k)*Properties%Elements(i)%Volume*Element_Flux(k,i)
+                absorbed = absorbed + sum(matmul(Properties%Elements(i)%Sigma_r(k)*Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
                 do j = 1, N%Group
 
-                    if(j /= k) scattered_out = scattered_out + Properties%Elements(i)%Sigma_s(k,j)*Properties%Elements(i)%Volume*Element_Flux(k,i)
+                    if(j /= k) scattered_out = scattered_out + Properties%Elements(i)%Sigma_s(k,j)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(j,:)))
 
                 end do
+
+                escaped = escaped + sum(matmul(((1.0_8/(3.0_8*Properties%Elements(i)%Sigma_t(k)))*Properties%Elements(i)%D_Matrix + Properties%Elements(i)%B_Matrix),Properties%Elements(i)%Flux(k,:)))
 
             end do
 
@@ -154,14 +138,13 @@ contains
             removed_total = removed_total + absorbed + scattered_out
             print *, "  Removal Rate      = ", absorbed + scattered_out
 
-            escaped = fission_source + scattered_in - (absorbed + scattered_out)
             print *, "  Incoming Current  = ", escaped*alpha/(1+alpha)
 
             if (Properties%LBC == 3) then
                 incoming_total = incoming_total + escaped*alpha/(1+alpha)
                 escaped = escaped/(1+alpha)
             end if
-            
+
             escaped_total = escaped_total + escaped
             print *, "  Outgoing Current  = ", escaped
 
@@ -182,20 +165,17 @@ contains
 
     end subroutine neutron_balance_diffusion
 
-    subroutine reaction_rate_diffusion(Properties, Results, N, this)
+    subroutine reaction_rate_diffusion(Properties, Results, N)
 
         type(PropertiesTypeD)   :: Properties
         type(ResultsTypeD)      :: Results
         type(NTypeD)            :: N
-        type(Mesh)              :: this
 
         real(kind=8), dimension(N%Material) :: Volume, Mean_Flux, fission_rate, absorption_rate
 
-        real(kind=8) :: Element_Flux
-
         integer, dimension(N%Material) :: Number_of_Elements
 
-        integer :: i, j, k, a, Nodes_per_Element
+        integer :: i, j, k
 
         print *, "Reaction Rates:"
         print *, " "
@@ -203,7 +183,6 @@ contains
         do k = 1, N%Group
 
             Volume = 0.0_8
-            Element_Flux = 0.0_8
             fission_rate = 0.0_8
             absorption_rate = 0.0_8
             Mean_Flux = 0.0_8
@@ -221,21 +200,11 @@ contains
                     
                     if (Properties%Elements(i)%Material == j) then
 
-                        Nodes_per_Element = Properties%Elements(i)%Number_of_Nodes
+                        fission_rate(j) = fission_rate(j) + (1/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
-                        Element_Flux = 0.0_8
+                        absorption_rate(j) = absorption_rate(j) + Properties%Elements(i)%Sigma_a(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
-                        do a = 1, Nodes_per_Element
-            
-                            Element_Flux = Element_Flux + (Results%Flux(k,this%Cell_Pointers(i,a)))/Nodes_per_Element
-            
-                        end do
-
-                        fission_rate(j) = fission_rate(j) + (1/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*Properties%Elements(i)%Volume*Element_Flux
-
-                        absorption_rate(j) = absorption_rate(j) + Properties%Elements(i)%Sigma_a(k)*Properties%Elements(i)%Volume*Element_Flux
-
-                        Mean_Flux(j) = Mean_Flux(j) + Element_Flux*Properties%Elements(i)%Volume
+                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))*Properties%Elements(i)%Volume/Properties%Elements(i)%Number_of_Nodes
 
                         Volume(j) = Volume(j) + Properties%Elements(i)%Volume
 
@@ -259,6 +228,6 @@ contains
 
         end do
 
-    end subroutine reaction_rate_diffusion
+    end subroutine reaction_rate_diffusion    
 
 end module

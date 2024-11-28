@@ -59,6 +59,8 @@ contains
 
         end do
 
+        Properties%Elements(i)%F_out_Matrix(m,:,:) = ABS(mu)*F_out
+
         if(Properties%g == 0) Properties%Elements(i)%K_Matrix(k,m,:,:) = -mu*Properties%Elements(i)%S_Matrix(1,:,:) + Properties%Elements(i)%Sigma_t(k)*Properties%Elements(i)%A_Matrix + ABS(mu)*F_out
 
     end subroutine Construct_Total_Matrix_1D

@@ -26,29 +26,9 @@ contains
 
     real(kind=8) :: Norm, R
 
-    real(kind=8), dimension(N%Group,N%Element) :: Element_Flux
-
-    integer :: k, i, a
+    integer :: k, i
 
     Norm = 0
-
-    Element_Flux = 0.0_8
-
-    do k = 1,N%Group
-
-        do i = 1,N%Element
-
-            do a = 1, Properties%Elements(i)%Number_of_Nodes
-
-                Element_Flux(k,i) = Element_Flux(k,i) + Results%Flux(k,Properties%Elements(i)%Cell_Pointers(a))
-
-            end do
-
-            Element_Flux(k,i) = Element_Flux(k,i)/Properties%Elements(i)%Number_of_Nodes
-
-        end do
-
-    end do
 
     do i = 1,N%Element
 
@@ -70,11 +50,11 @@ contains
 
             if (.not. Properties%Adjoint) then
 
-                Norm = Norm + (1.0_8/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*Element_Flux(k,i)*Properties%Elements(i)%Volume
+                Norm = Norm + (1.0_8/Results%k_eff)*Properties%Elements(i)%Sigma_f(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
             else if (Properties%Adjoint) then
 
-                Norm = Norm + Element_Flux(k,i)*Properties%Elements(i)%Volume
+                Norm = Norm + sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
             end if
 
