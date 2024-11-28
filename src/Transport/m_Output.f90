@@ -99,7 +99,7 @@ contains
         print *, "Neutron Balance:"
         print *, " "
 
-        if (Properties%LBC == 3 .and. Properties%RBC == 3) alpha = Properties%Alpha
+        if (Properties%LBC == 3) alpha = Properties%Alpha
 
         do k = 1, N%Group
 
