@@ -1,16 +1,16 @@
 ------------------------------Overall Properties----------------------------------------------
 1		!Case 0 = Fixed Source, 1 = Eigenvalue
-2		!Materials
+1		!Materials
 1		!Groups
-0		!Angles (0, 2, 4, 6, 8, 12, 16, 20)
+2		!Angles (0, 2, 4, 6, 8, 12, 16, 20)
 0		!Anisotropy 0 to 10
 0		!Geometry 0 = Slab, 1 = Cylindrical, 2 = Spherical
 0		!Adjoint? 0 = No, 1 = Yes
 ------------------------------Boundary Conditions---------------------------------------------
-1		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 5 = Surface Source
-1		!RBC
-1		!TBC
-1		!BBC
+2		!LBC 0 = Zero, 1 = Reflective, 2 = Vacuum, 3 = Albedo, 5 = Surface Source
+2		!RBC
+2		!TBC
+2		!BBC
 2		!FBC
 2		!BaBC
 0.5		!alpha

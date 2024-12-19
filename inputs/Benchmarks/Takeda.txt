@@ -2,7 +2,7 @@
 1		!Case 0 = Fixed Source, 1 = Eigenvalue
 4		!Materials
 2		!Groups
-0		!Angles
+16		!Angles
 0		!Anisotropy 0 to 3
 0		!Geometry
 0		!Adjoint? 0 = No, 1 = Yes
