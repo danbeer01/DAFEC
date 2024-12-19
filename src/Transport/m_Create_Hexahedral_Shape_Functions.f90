@@ -328,7 +328,7 @@ contains
 
     end Function Generate_Hexahedral_Shape_Functions
 
-    Function Generate_Shape_Functions_Derivative_xi(this, Degree, a, eta, xi, zeta) Result(Value)
+    Function Generate_Hex_Shape_Functions_Derivative_xi(this, Degree, a, eta, xi, zeta) Result(Value)
 
         type(PropertiesType), intent(in) :: this
 
@@ -414,9 +414,9 @@ contains
 
         end if
 
-    end Function Generate_Shape_Functions_Derivative_xi
+    end Function Generate_Hex_Shape_Functions_Derivative_xi
 
-    Function Generate_Shape_Functions_Derivative_eta(this, Degree, a, eta, xi, zeta) Result(Value)
+    Function Generate_Hex_Shape_Functions_Derivative_eta(this, Degree, a, eta, xi, zeta) Result(Value)
 
         type(PropertiesType), intent(in) :: this
 
@@ -502,9 +502,9 @@ contains
 
         end if
 
-    end Function Generate_Shape_Functions_Derivative_eta
+    end Function Generate_Hex_Shape_Functions_Derivative_eta
 
-    Function Generate_Shape_Functions_Derivative_zeta(this, Degree, a, eta, xi, zeta) Result(Value)
+    Function Generate_Hex_Shape_Functions_Derivative_zeta(this, Degree, a, eta, xi, zeta) Result(Value)
 
         type(PropertiesType), intent(in) :: this
 
@@ -590,7 +590,7 @@ contains
 
         end if
 
-    end Function Generate_Shape_Functions_Derivative_zeta
+    end Function Generate_Hex_Shape_Functions_Derivative_zeta
 
     subroutine Calculate_Hex_Streaming_Matrix(Properties,N,i,Streaming_Matrix,mu_ang,eta_ang,xi_ang)
 
@@ -626,9 +626,9 @@ contains
                 dSFMat(j,2,k) = eta_ang*Generate_Hexahedral_Shape_Functions(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
                 dSFMat(j,3,k) = xi_ang*Generate_Hexahedral_Shape_Functions(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
 
-                dSFMatT(j,k,1) = Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
-                dSFMatT(j,k,2) = Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
-                dSFMatT(j,k,3) = Generate_Shape_Functions_Derivative_zeta(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
+                dSFMatT(j,k,1) = Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
+                dSFMatT(j,k,2) = Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
+                dSFMatT(j,k,3) = Generate_Hex_Shape_Functions_Derivative_zeta(Properties, N%Degree, k, eta(j), xi(j), zeta(j))
 
             end do
 
@@ -763,12 +763,12 @@ contains
             do p = 1, size(Nodes)
                 k = Properties%Elements(i)%Side_Nodes(j,p)
                 Shape_Functions(k,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)
-                dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
-                dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
-                dz_dxi(l) = dz_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
-                dx_deta(l) = dx_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
-                dy_deta(l) = dy_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
-                dz_deta(l) = dz_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+                dx_dxi(l) = dx_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+                dy_dxi(l) = dy_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+                dz_dxi(l) = dz_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+                dx_deta(l) = dx_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+                dy_deta(l) = dy_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+                dz_deta(l) = dz_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
             end do
 
         end do
@@ -850,12 +850,12 @@ contains
                 Shape_Functions(k,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)
                 k_n = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),p)
                 Shape_Functions_Neighbour(k_n,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Neighbour_Nodes(p), eta(l), xi(l), 1.0_8)
-                dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
-                dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
-                dz_dxi(l) = dz_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
-                dx_deta(l) = dx_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
-                dy_deta(l) = dy_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
-                dz_deta(l) = dz_deta(l) + Generate_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+                dx_dxi(l) = dx_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+                dy_dxi(l) = dy_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+                dz_dxi(l) = dz_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+                dx_deta(l) = dx_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+                dy_deta(l) = dy_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+                dz_deta(l) = dz_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
             end do
 
         end do

@@ -383,23 +383,23 @@ contains
 
         do i = 1, size(Coordinates,1)
 
-            dx_deta = dx_deta + Generate_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
+            dx_deta = dx_deta + Generate_Hex_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
 
-            dy_deta = dy_deta + Generate_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
+            dy_deta = dy_deta + Generate_Hex_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
 
-            dz_deta = dz_deta + Generate_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
+            dz_deta = dz_deta + Generate_Hex_Shape_Functions_Derivative_eta(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
 
-            dx_dxi = dx_dxi + Generate_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
+            dx_dxi = dx_dxi + Generate_Hex_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
 
-            dy_dxi = dy_dxi + Generate_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
+            dy_dxi = dy_dxi + Generate_Hex_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
 
-            dz_dxi = dz_dxi + Generate_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
+            dz_dxi = dz_dxi + Generate_Hex_Shape_Functions_Derivative_xi(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
 
-            dx_dzeta = dx_dzeta + Generate_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
+            dx_dzeta = dx_dzeta + Generate_Hex_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,1)
 
-            dy_dzeta = dy_dzeta + Generate_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
+            dy_dzeta = dy_dzeta + Generate_Hex_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,2)
 
-            dz_dzeta = dz_dzeta + Generate_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
+            dz_dzeta = dz_dzeta + Generate_Hex_Shape_Functions_Derivative_zeta(this, Degree, i, eta, xi, zeta)*Coordinates(i,3)
 
         end do
     

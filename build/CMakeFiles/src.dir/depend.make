@@ -184,6 +184,7 @@ CMakeFiles/src.dir/m_boundary_conditions.mod.stamp: CMakeFiles/src.dir/src/Trans
 CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Boundary_Conditions.f90.o.provides.build
+CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_create_hexahedral_shape_functions.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_create_quadrilateral_shape_functions.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_gauss_points.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Calculate_Curvilinear_Normals.f90.o: CMakeFiles/src.dir/m_read_properties.mod.stamp
@@ -412,6 +413,7 @@ CMakeFiles/src.dir/m_sweep_order_2d.mod.stamp: CMakeFiles/src.dir/src/Transport/
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o.provides.build:
 	$(CMAKE_COMMAND) -E touch CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o.provides.build
 CMakeFiles/src.dir/build: CMakeFiles/src.dir/src/Transport/m_Sweep_Order_2D.f90.o.provides.build
+CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o: CMakeFiles/src.dir/m_calculate_curvilinear_normals.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o: CMakeFiles/src.dir/m_calculate_mu_w.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o: CMakeFiles/src.dir/m_read_properties.mod.stamp
 CMakeFiles/src.dir/src/Transport/m_Sweep_Order_3D.f90.o: CMakeFiles/src.dir/m_vtk_reader.mod.stamp

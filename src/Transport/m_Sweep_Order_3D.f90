@@ -11,6 +11,7 @@ module m_Sweep_Order_3D
   use m_Read_Properties
   use m_VTK_Reader
   use m_Calculate_mu_w
+  use m_Calculate_Curvilinear_Normals
 
   implicit none
   
@@ -107,6 +108,7 @@ module m_Sweep_Order_3D
 
       do i = 1, N%Element
           allocate(Properties%Elements(i)%Unit_Vectors(Properties%Elements(i)%Number_of_Sides,3))
+          allocate(Properties%Elements(i)%Gauss_Unit_Vectors(Properties%Elements(i)%Number_of_Sides,(2*N%Degree+2)**2,3))
           do j = 1, Properties%Elements(i)%Number_of_Sides
             if (Properties%Elements(i)%Cell_Type == 12 .or. Properties%Elements(i)%Cell_Type == 29) then
               if (j == 1) then
@@ -228,8 +230,10 @@ module m_Sweep_Order_3D
             normal(3) = vector1(1)*vector2(2) - vector1(2)*vector2(1)
             mag = sqrt(normal(1)**2 + normal(2)**2 + normal(3)**2)
             Properties%Elements(i)%Unit_Vectors(j,:) = normal/mag
+            call Calculate_Curvilinear_Unit_Vectors_3D(Properties, N, i, j, Properties%Elements(i)%Gauss_Unit_Vectors(j,:,:))
           end do
       end do
+      stop
 
   end subroutine Calculate_Unit_Vectors
 
