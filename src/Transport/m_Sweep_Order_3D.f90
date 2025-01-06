@@ -233,7 +233,6 @@ module m_Sweep_Order_3D
             call Calculate_Curvilinear_Unit_Vectors_3D(Properties, N, i, j, Properties%Elements(i)%Gauss_Unit_Vectors(j,:,:))
           end do
       end do
-      stop
 
   end subroutine Calculate_Unit_Vectors
 

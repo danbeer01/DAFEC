@@ -177,95 +177,6 @@ contains
             this%Isoparametric_Coordinates(63,:) = [-1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
             this%Isoparametric_Coordinates(64,:) = [1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
 
-            ! ! Corner nodes
-            ! this%Isoparametric_Coordinates(1,:) = [1.0_8, 1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(2,:) = [-1.0_8, 1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(3,:) = [-1.0_8, -1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(4,:) = [1.0_8, -1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(5,:) = [1.0_8, 1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(6,:) = [-1.0_8, 1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(7,:) = [-1.0_8, -1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(8,:) = [1.0_8, -1.0_8, -1.0_8]
-
-            ! ! Upper face side nodes
-            ! this%Isoparametric_Coordinates(9,:) = [1.0_8/3.0_8, 1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(10,:) = [-1.0_8/3.0_8, 1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(15,:) = [-1.0_8, 1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(16,:) = [-1.0_8, -1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(19,:) = [-1.0_8/3.0_8, -1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(20,:) = [1.0_8/3.0_8, -1.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(12,:) = [1.0_8, -1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(11,:) = [1.0_8, 1.0_8/3.0_8, 1.0_8]
-
-            ! ! Lower face side nodes !17
-            ! this%Isoparametric_Coordinates(25,:) = [1.0_8/3.0_8, 1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(26,:) = [-1.0_8/3.0_8, 1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(29,:) = [-1.0_8, 1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(30,:) = [-1.0_8, -1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(31,:) = [-1.0_8/3.0_8, -1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(32,:) = [1.0_8/3.0_8, -1.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(28,:) = [1.0_8, -1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(27,:) = [1.0_8, 1.0_8/3.0_8, -1.0_8]
-
-            ! ! Middle side nodes !25
-            ! this%Isoparametric_Coordinates(13,:) = [1.0_8, 1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(14,:) = [1.0_8, 1.0_8, -1.0_8/3.0_8]
-
-            ! this%Isoparametric_Coordinates(17,:) = [-1.0_8, 1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(18,:) = [-1.0_8, 1.0_8, -1.0_8/3.0_8]
-
-            ! this%Isoparametric_Coordinates(21,:) = [-1.0_8, -1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(22,:) = [-1.0_8, -1.0_8, -1.0_8/3.0_8]
-
-            ! this%Isoparametric_Coordinates(23,:) = [1.0_8, -1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(24,:) = [1.0_8, -1.0_8, -1.0_8/3.0_8]
-
-            ! ! Upper face nodes
-            ! this%Isoparametric_Coordinates(33,:) = [1.0_8/3.0_8, 1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(36,:) = [-1.0_8/3.0_8, 1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(35,:) = [-1.0_8/3.0_8, -1.0_8/3.0_8, 1.0_8]
-            ! this%Isoparametric_Coordinates(34,:) = [1.0_8/3.0_8, -1.0_8/3.0_8, 1.0_8]
-
-            ! ! Lower face nodes
-            ! this%Isoparametric_Coordinates(53,:) = [1.0_8/3.0_8, 1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(54,:) = [-1.0_8/3.0_8, 1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(55,:) = [-1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8]
-            ! this%Isoparametric_Coordinates(56,:) = [1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8]
-
-            ! ! Middle faces nodes !41
-            ! this%Isoparametric_Coordinates(37,:) = [1.0_8/3.0_8, 1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(38,:) = [-1.0_8/3.0_8, 1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(39,:) = [-1.0_8/3.0_8, 1.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(40,:) = [1.0_8/3.0_8, 1.0_8, -1.0_8/3.0_8]
-
-            ! this%Isoparametric_Coordinates(45,:) = [-1.0_8, 1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(46,:) = [-1.0_8, -1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(47,:) = [-1.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(48,:) = [-1.0_8, 1.0_8/3.0_8, -1.0_8/3.0_8]
-
-            ! ! 3,4,7,8
-            ! this%Isoparametric_Coordinates(49,:) = [-1.0_8/3.0_8, -1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(50,:) = [1.0_8/3.0_8, -1.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(51,:) = [1.0_8/3.0_8, -1.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(52,:) = [-1.0_8/3.0_8, -1.0_8, -1.0_8/3.0_8]
-
-            ! ! 1,4,5,8
-            ! this%Isoparametric_Coordinates(44,:) = [1.0_8, -1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(41,:) = [1.0_8, 1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(42,:) = [1.0_8, 1.0_8/3.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(43,:) = [1.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
-
-            ! ! Middle nodes
-            ! this%Isoparametric_Coordinates(57,:) = [1.0_8/3.0_8, 1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(58,:) = [-1.0_8/3.0_8, 1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(59,:) = [-1.0_8/3.0_8, -1.0_8/3.0_8, 1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(60,:) = [1.0_8/3.0_8, -1.0_8/3.0_8, 1.0_8/3.0_8]
-
-            ! this%Isoparametric_Coordinates(61,:) = [1.0_8/3.0_8, 1.0_8/3.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(62,:) = [-1.0_8/3.0_8, 1.0_8/3.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(63,:) = [-1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
-            ! this%Isoparametric_Coordinates(64,:) = [1.0_8/3.0_8, -1.0_8/3.0_8, -1.0_8/3.0_8]
-
         end if
 
     end subroutine Calculate_Isoparametric_Hexahedral_Coordinates
@@ -874,5 +785,153 @@ contains
         end do
 
     end Function Integrate_Hex_Face_F_in
+
+    subroutine Integrate_Hex_Face_C(Properties,N,i,j,l,F_out,Omega_n)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j, l
+        real(kind = 8)      :: Omega_n
+        integer             :: Num_Gauss_Points, a, b, index_1, index_2, k, p
+        real(kind = 8), dimension(:,:) :: F_out
+        real(kind = 8), dimension(:), allocatable :: xi, eta, w
+        integer, dimension(:), allocatable :: Nodes
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions
+        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi, dz_dxi, dx_deta, dy_deta, dz_deta
+
+        Num_Gauss_Points = (2*N%Degree+2)**2
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes,Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points), dx_deta(Num_Gauss_Points), dy_deta(Num_Gauss_Points), dz_dxi(Num_Gauss_Points), dz_deta(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), eta(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        allocate(Nodes((N%Degree+1)**2))
+
+        call Generate_2D_Quad_Gauss_Points(Num_Gauss_Points, eta, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        Nodes(3) = 3
+        Nodes(4) = 4
+        if (N%Degree == 2) then
+            Nodes(5:9) = [9,10,11,12,25]
+        else if (N%Degree == 3) then
+            Nodes(5:16) = [9,10,11,12,13,14,15,16,33,34,35,36]
+        end if
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+        dz_dxi = 0.0_8
+        dx_deta = 0.0_8
+        dy_deta = 0.0_8
+        dz_deta = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        do p = 1, size(Nodes)
+            k = Properties%Elements(i)%Side_Nodes(j,p)
+            Shape_Functions(k,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)
+            dx_dxi(l) = dx_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+            dy_dxi(l) = dy_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+            dz_dxi(l) = dz_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+            dx_deta(l) = dx_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+            dy_deta(l) = dy_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+            dz_deta(l) = dz_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+        end do
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+           do b = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(i)%Side_Nodes(j,b)
+
+                F_out(index_1,index_2) = F_out(index_1,index_2) + abs(Omega_n)*w(l)*sqrt((dy_dxi(l)*dz_deta(l) - dz_dxi(l)*dy_deta(l))**2 + (dz_dxi(l)*dx_deta(l) - dx_dxi(l)*dz_deta(l))**2 + (dx_dxi(l)*dy_deta(l) - dy_dxi(l)*dx_deta(l))**2)*Shape_Functions(index_1,l)*Shape_Functions(index_2,l)
+                
+            end do
+
+        end do
+
+    end subroutine Integrate_Hex_Face_C
+
+    subroutine Integrate_Hex_Face_F_in_C(Properties,N,i,j,l,F_out,Omega_n)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j, l
+        real(kind = 8)      :: Omega_n
+        integer             :: Num_Gauss_Points, a, b, index_1, index_2, k, k_n, p
+        real(kind = 8), dimension(:,:) :: F_out
+        real(kind = 8), dimension(:), allocatable :: xi, eta, w
+        integer, dimension(:), allocatable :: Nodes, Neighbour_Nodes
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions, Shape_Functions_Neighbour
+        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi, dz_dxi, dx_deta, dy_deta, dz_deta
+
+        Num_Gauss_Points = (2*N%Degree+2)**2
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes,Num_Gauss_Points))
+        allocate(Shape_Functions_Neighbour(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Number_of_Nodes,Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points), dx_deta(Num_Gauss_Points), dy_deta(Num_Gauss_Points), dz_dxi(Num_Gauss_Points), dz_deta(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), eta(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        allocate(Nodes((N%Degree+1)**2))
+        allocate(Neighbour_Nodes((N%Degree+1)**2))
+
+        call Generate_2D_Quad_Gauss_Points(Num_Gauss_Points, eta, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        Nodes(3) = 3
+        Nodes(4) = 4
+        if (N%Degree == 2) then
+            Nodes(5:9) = [9,10,11,12,25]
+        else if (N%Degree == 3) then
+            Nodes(5:16) = [9,10,11,12,13,14,15,16,33,34,35,36]
+        end if
+
+        Neighbour_Nodes = Nodes
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+        dz_dxi = 0.0_8
+        dx_deta = 0.0_8
+        dy_deta = 0.0_8
+        dz_deta = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        do p = 1, size(Nodes)
+            k = Properties%Elements(i)%Side_Nodes(j,p)
+            Shape_Functions(k,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)
+            k_n = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),p)
+            Shape_Functions_Neighbour(k_n,l) = Generate_Hexahedral_Shape_Functions(Properties, N%Degree, Neighbour_Nodes(p), eta(l), xi(l), 1.0_8)
+            dx_dxi(l) = dx_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+            dy_dxi(l) = dy_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+            dz_dxi(l) = dz_dxi(l) + Generate_Hex_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+            dx_deta(l) = dx_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,1)
+            dy_deta(l) = dy_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,2)
+            dz_deta(l) = dz_deta(l) + Generate_Hex_Shape_Functions_Derivative_eta(Properties, N%Degree, Nodes(p), eta(l), xi(l), 1.0_8)*Properties%Elements(i)%Coordinates(k,3)
+        end do
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+            do b = 1, size(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),:))
+ 
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),b)
+
+                F_out(index_1,index_2) = F_out(index_1,index_2) + abs(Omega_n)*w(l)*sqrt((dy_dxi(l)*dz_deta(l) - dz_dxi(l)*dy_deta(l))**2 + (dz_dxi(l)*dx_deta(l) - dx_dxi(l)*dz_deta(l))**2 + (dx_dxi(l)*dy_deta(l) - dy_dxi(l)*dx_deta(l))**2)*Shape_Functions(index_1,l)*Shape_Functions_Neighbour(index_2,l)
+                
+            end do
+
+        end do
+
+    end subroutine Integrate_Hex_Face_F_in_C
 
 end module m_Create_Hexahedral_Shape_Functions
