@@ -138,6 +138,8 @@ module m_RZ
 
             end if
 
+            print *, 'Iteration ', iter, 'Eigenvalue', lambda_new, 'Error: ', ABS((lambda_new - lambda_old)/(lambda_old))
+
         end do
 
         print *, 'Iterations', iter
@@ -445,8 +447,6 @@ module m_RZ
 
         real(kind = 8), dimension(:), allocatable :: Boundary
 
-        real(kind = 8) :: r
-
         Properties%Elements(i)%Sweep_Source(g_index,ang,:) = 0.0_8
 
         allocate(Boundary(Properties%Elements(i)%Number_of_Nodes))
@@ -454,9 +454,6 @@ module m_RZ
         Boundary = 0.0_8
 
         do side_index = 1,Properties%Elements(i)%Number_of_Sides
-
-            ! r = (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,1),1) + Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,2),1))/2.0_8
-            r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
             neighbour_element = Properties%Elements(i)%Neighbours(side_index,1)
 
@@ -468,7 +465,7 @@ module m_RZ
 
             else
 
-                Properties%Elements(i)%Sweep_Source(g_index,ang,:) = Properties%Elements(i)%Sweep_Source(g_index,ang,:) + r*matmul(Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Properties%Elements(neighbour_element)%Flux(g_index,ang,:))
+                Properties%Elements(i)%Sweep_Source(g_index,ang,:) = Properties%Elements(i)%Sweep_Source(g_index,ang,:) + matmul(Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Properties%Elements(neighbour_element)%Flux(g_index,ang,:))
 
             end if
 
@@ -885,7 +882,7 @@ module m_RZ
 
                 do index_1 = 1, Num_Nodes
 
-                    dSFMat(j,1,index_1) = -SQRT(1 - xsi**2)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta(j), xi(j))
+                    dSFMat(j,1,index_1) = -SQRT(1.0_8 - xsi**2)*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta(j), xi(j))
                     dSFMat(j,2,index_1) = xsi*Generate_Triangular_Shape_Functions(N%Degree, index_1, eta(j), xi(j))
     
                     dSFMatT(j,index_1,1) = Generate_Tri_Shape_Functions_Derivative_xi(N%Degree, index_1, eta(j), xi(j))
@@ -899,7 +896,7 @@ module m_RZ
 
                 do index_1 = 1, Num_Nodes
 
-                    dSFMat(j,1,index_1) = -SQRT(1 - xsi**2)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta(j), xi(j))
+                    dSFMat(j,1,index_1) = -SQRT(1.0_8 - xsi**2)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta(j), xi(j))
                     dSFMat(j,2,index_1) = xsi*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta(j), xi(j))
 
                     dSFMatT(j,index_1,1) = Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, index_1, eta(j), xi(j))

@@ -64,6 +64,9 @@ contains
 
     end do
 
+    if (Properties%g == 1) Norm = Norm*2.0_8*PI
+    if (Properties%g == 2) Norm = Norm*4.0_8*PI
+
     Results%Scalar_Flux = Results%Scalar_Flux / Norm
 
     Results%Angular_Flux = Results%Angular_Flux / Norm

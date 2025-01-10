@@ -182,6 +182,24 @@ contains
 
             end do
 
+            if (Properties%g == 1) then
+
+                fission_source = fission_source*2.0_8*PI
+                scattered_in = scattered_in*2.0_8*PI
+                scattered_out = scattered_out*2.0_8*PI
+                absorbed = absorbed*2.0_8*PI
+                escaped = escaped*2.0_8*PI
+
+            else if (Properties%g == 2) then
+
+                fission_source = fission_source*4.0_8*PI
+                scattered_in = scattered_in*4.0_8*PI
+                scattered_out = scattered_out*4.0_8*PI
+                absorbed = absorbed*4.0_8*PI
+                escaped = escaped*4.0_8*PI
+
+            end if
+
             source_total = source_total + fission_source + scattered_in
             print *, "  Source Input      = ", fission_source + scattered_in
 

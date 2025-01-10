@@ -47,8 +47,8 @@ contains
         real(kind = 8)                      :: Total_Source, Total_Source_new
         real(kind = 8)                      :: lambda_old = 1.1_8, lambda_new = 1.0_8
 
-        integer, dimension(N%Ordinates,N%Element) :: Sweep_Order
-        real(kind = 8), dimension(N%Ordinates)    :: w
+        integer, dimension(:,:), allocatable   :: Sweep_Order
+        real(kind = 8), dimension(N%Ordinates) :: w
 
         integer                             :: max_iter = 10000 ! maximum number of iterations
         real(kind = 8)                      :: tol = 1.0e-8 ! tolerance for convergence
@@ -70,6 +70,12 @@ contains
         ! Allocate memory for the flux array
         allocate(Results%Angular_Flux(N%Group,N%N,N%Ordinates))
         allocate(Results%Scalar_Flux(N%Group,N%N))
+
+        if(N%D == 2 .and. Properties%g == 1) then
+            allocate(Sweep_Order(N%Ordinates+N%Angle,N%Element))
+        else
+            allocate(Sweep_Order(N%Ordinates,N%Element))
+        end if
 
         if (N%D == 1) call Calculate_Isoparametric_Coordinates(N%Degree, Properties)
         if (N%D == 2) call Calculate_Isoparametric_Quadrilateral_Coordinates(N%Degree, Properties)
@@ -145,7 +151,7 @@ contains
 
             call Calculate_Boundaries(Properties, N)
 
-            !$OMP PARALLEL DO PRIVATE(ang,i,element_index)
+            !$OMP PARALLEL DO PRIVATE(ang,g_index,i,element_index)
             do ang = 1,N%Ordinates
 
                 do g_index = 1,N%Group
@@ -596,13 +602,9 @@ contains
 
                     call Calculate_Tri_Source_Vector(Properties,N,i,Properties%Elements(i)%Source_Vector)
 
-                    if (Properties%g == 1) Properties%Elements(i)%Source_Vector = Properties%Elements(i)%Source_Vector*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1))/3.0_8
-
                 else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
                     call Calculate_Quad_Source_Vector(Properties,N,i,Properties%Elements(i)%Source_Vector)
-
-                    if (Properties%g == 1) Properties%Elements(i)%Source_Vector = Properties%Elements(i)%Source_Vector*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
                 else if (Properties%Elements(i)%Cell_Type == 12 .or. Properties%Elements(i)%Cell_Type == 29) then
 
@@ -668,7 +670,7 @@ contains
         else if (Properties%g == 1) then
         call Create_Ordinate_Arrays_RZ(N, p_indices, q_indices, w_indices, mu_indices)
         call calculate_xsi(xsi)
-        !$OMP PARALLEL DO PRIVATE(ang,g_index,i,mu_counter,p,sign,mu_val,eta_val)
+        ! $OMP PARALLEL DO PRIVATE(ang,g_index,i,mu_counter,p,sign,mu_val,eta_val)
         do ang = 1,N%Ordinates
 
             if (ang == 1) sign = -1
@@ -693,7 +695,7 @@ contains
             end do
 
         end do
-        !$OMP END PARALLEL DO
+        ! $OMP END PARALLEL DO
         end if
         else if (N%D == 1) then
         call Calculate_mu_1D(mu_1D)

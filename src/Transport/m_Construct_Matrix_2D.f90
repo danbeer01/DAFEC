@@ -65,13 +65,9 @@ contains
 
             call Calculate_Tri_Streaming_Matrix(Properties,N,i,Properties%Elements(i)%S_Matrix(ang,:,:),mu,eta)
 
-            if (Properties%g == 1) Properties%Elements(i)%S_Matrix(ang,:,:) = Properties%Elements(i)%S_Matrix(ang,:,:)*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1))/3.0_8
-
         else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
             call Calculate_Quad_Streaming_Matrix(Properties,N,i,Properties%Elements(i)%S_Matrix(ang,:,:),mu,eta)
-
-            if (Properties%g == 1) Properties%Elements(i)%S_Matrix(ang,:,:) = Properties%Elements(i)%S_Matrix(ang,:,:)*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
         else
 
@@ -93,13 +89,9 @@ contains
 
             call Calculate_Tri_Mass_Matrix(Properties,N,i,Properties%Elements(i)%A_Matrix)
 
-            if (Properties%g == 1) Properties%Elements(i)%A_Matrix = Properties%Elements(i)%A_Matrix*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1))/3.0_8
-
         else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
             call Calculate_Quad_Mass_Matrix(Properties,N,i,Properties%Elements(i)%A_Matrix)
-
-            if (Properties%g == 1) Properties%Elements(i)%A_Matrix = Properties%Elements(i)%A_Matrix*(Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
         else
 
@@ -118,11 +110,14 @@ contains
         real(kind=8), intent(in) :: mu, eta
         integer, intent(in)      :: i, ang
         
-        real(kind = 8) :: Omega_n
+        real(kind = 8) :: Omega_n, r
 
         integer :: side_index
 
         do side_index = 1, Properties%Elements(i)%Number_of_Sides
+
+            ! r = (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,1),1) + Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,2),1))/2.0_8
+            r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
             Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = 0.0_8
 
@@ -157,6 +152,8 @@ contains
                 end if
 
             end if
+
+            if (Properties%g == 1) Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:)*r
 
         end do
 
@@ -231,7 +228,8 @@ contains
 
                         if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
 
-                            ! call Integrate_Tri_Side(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+                            print *, 'Triangular cell type not supported'
+                            stop
 
                         else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
 
@@ -243,7 +241,8 @@ contains
 
                         if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
 
-                            ! call Integrate_Tri_Side_F_in(Properties,N,i,side_index,gauss_index,Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:),Omega_n)
+                            print *, 'Triangular cell type not supported'
+                            stop
 
                         else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
 
@@ -289,7 +288,8 @@ contains
 
                     if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
 
-                        ! call Integrate_Tri_Side(Properties,N,i,side_index,gauss_index,F_out,Omega_n)
+                        print *, 'Triangular cell type not supported'
+                        stop
 
                     else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 23 .or. Properties%Elements(i)%Cell_Type == 28) then
 

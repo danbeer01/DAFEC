@@ -365,7 +365,7 @@ contains
         real(kind = 8), intent(in)                :: mu_ang, eta_ang
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, w
-        real(kind = 8)                            :: xi_val, eta_val
+        real(kind = 8)                            :: xi_val, eta_val, r
 
         real(kind = 8), dimension(:,:,:), allocatable :: dSFMat, dSFMatT
 
@@ -396,7 +396,16 @@ contains
 
             end do
 
-            Streaming_Matrix = Streaming_Matrix + w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
+            r = 0.0_8
+
+            do k = 1, Properties%Elements(i)%Number_of_Nodes
+
+                r = r + Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, k, eta_val, xi_val)*Properties%Elements(i)%Coordinates(k,1)
+
+            end do
+
+            if(Properties%g == 0) Streaming_Matrix = Streaming_Matrix + w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
+            if(Properties%g == 1) Streaming_Matrix = Streaming_Matrix + r*w(j)*ABS(Properties%Elements(i)%Det_Jacobian(j))*matmul(matmul(dSFMatT(j,:,:), transpose(Properties%Elements(i)%Inverse_Jacobian(j,:,:))), dSFMat(j,:,:))
 
         end do
 
@@ -408,12 +417,12 @@ contains
         type(NType)          :: N
 
         integer, intent(in) :: i
-        integer             :: index_1, index_2, j, Num_Gauss_Points, Num_Nodes
+        integer             :: index_1, index_2, j, k, Num_Gauss_Points, Num_Nodes
 
         real(kind = 8), dimension(:,:), intent(inout) :: Mass_Matrix
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, w
-        real(kind = 8)                            :: xi_val, eta_val
+        real(kind = 8)                            :: xi_val, eta_val, r
 
         Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
 
@@ -425,17 +434,26 @@ contains
 
         Mass_Matrix = 0.0_8
 
-        do index_1 = 1, Num_Nodes
+        do j = 1, Num_Gauss_Points
 
-            do index_2 = 1, Num_Nodes
+            xi_val = xi(j)
 
-                do j = 1, Num_Gauss_Points
+            eta_val = eta(j)
 
-                    xi_val = xi(j)
+            r = 0.0_8
 
-                    eta_val = eta(j)
+            do k = 1, Num_Nodes
 
-                    Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+                r = r + Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, k, eta_val, xi_val)*Properties%Elements(i)%Coordinates(k,1)
+
+            end do
+
+            do index_1 = 1, Num_Nodes
+
+                do index_2 = 1, Num_Nodes
+
+                    if(Properties%g == 0) Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+                    if(Properties%g == 1) Mass_Matrix(index_1,index_2) = Mass_Matrix(index_1,index_2) + r*w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_2, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
 
                 end do
 
@@ -451,12 +469,12 @@ contains
         type(NType)          :: N
 
         integer, intent(in) :: i
-        integer             :: index_1, j, Num_Gauss_Points, Num_Nodes
+        integer             :: index_1, j, k, Num_Gauss_Points, Num_Nodes
 
         real(kind = 8), dimension(:), intent(inout) :: Source_Vector
 
         real(kind = 8), dimension(:), allocatable :: xi, eta, w
-        real(kind = 8)                            :: xi_val, eta_val
+        real(kind = 8)                            :: xi_val, eta_val, r
 
         Num_Gauss_Points = Properties%Elements(i)%Number_of_Nodes
 
@@ -468,15 +486,24 @@ contains
 
         Source_Vector = 0.0_8
 
-        do index_1 = 1, Num_Nodes
+        do j = 1, Num_Gauss_Points
 
-            do j = 1, Num_Gauss_Points
+            xi_val = xi(j) 
 
-                xi_val = xi(j) 
+            eta_val = eta(j)
 
-                eta_val = eta(j)
+            r = 0.0_8
 
-                Source_Vector(index_1) = Source_Vector(index_1) + w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+            do k = 1, Num_Nodes
+
+                r = r + Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, k, eta_val, xi_val)*Properties%Elements(i)%Coordinates(k,1)
+
+            end do
+
+            do index_1 = 1, Num_Nodes
+
+                if(Properties%g == 0) Source_Vector(index_1) = Source_Vector(index_1) + w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
+                if(Properties%g == 1) Source_Vector(index_1) = Source_Vector(index_1) + r*w(j)*Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, index_1, eta_val, xi_val)*Properties%Elements(i)%Det_Jacobian(j)
 
             end do
 
@@ -495,7 +522,7 @@ contains
         real(kind = 8), dimension(:), allocatable :: xi, w
         integer, dimension(:), allocatable :: Nodes
         real(kind = 8), dimension(:,:), allocatable :: Shape_Functions
-        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi
+        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi, r
 
         allocate(F_out(Properties%Elements(i)%Number_of_Nodes,Properties%Elements(i)%Number_of_Nodes))
 
@@ -503,7 +530,7 @@ contains
 
         allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes,Num_Gauss_Points))
 
-        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points), r(Num_Gauss_Points))
 
         allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
 
@@ -523,6 +550,7 @@ contains
 
         dx_dxi = 0.0_8
         dy_dxi = 0.0_8
+        r = 0.0_8
 
         Shape_Functions = 0.0_8
 
@@ -533,6 +561,7 @@ contains
                 Shape_Functions(k,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))
                 dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
                 dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+                r(l) = r(l) + Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
             end do
 
         end do
@@ -546,8 +575,9 @@ contains
                 index_1 = Properties%Elements(i)%Side_Nodes(j,a)
                 index_2 = Properties%Elements(i)%Side_Nodes(j,b)
 
-                F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
-                
+                if(Properties%g == 0) F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
+                if(Properties%g == 1) F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
+
             end do
 
         end do
@@ -567,7 +597,7 @@ contains
 
         integer, dimension(N%Degree+1) :: Nodes, Neighbour_Nodes
 
-        real(kind = 8), dimension(:), allocatable  :: dx_dxi, dy_dxi
+        real(kind = 8), dimension(:), allocatable  :: dx_dxi, dy_dxi, r
 
         real(kind = 8), dimension(:,:), allocatable :: Shape_Functions, Shape_Functions_Neighbour
 
@@ -579,7 +609,7 @@ contains
 
         allocate(Shape_Functions_Neighbour(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Number_of_Nodes, Num_Gauss_Points))
 
-        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points), r(Num_Gauss_Points))
 
         allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
 
@@ -607,6 +637,7 @@ contains
 
         dx_dxi = 0.0_8
         dy_dxi = 0.0_8
+        r = 0.0_8
 
         Shape_Functions = 0.0_8
 
@@ -621,6 +652,7 @@ contains
                 Shape_Functions_Neighbour(k_n,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Neighbour_Nodes(p), 1.0_8, xi(l))
                 dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
                 dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+                r(l) = r(l) + Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
             end do
 
         end do
@@ -630,11 +662,12 @@ contains
         do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
 
             do b = 1, size(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),:))
- 
+
                 index_1 = Properties%Elements(i)%Side_Nodes(j,a)
                 index_2 = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),b)
 
-                F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
+                if(Properties%g == 0) F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
+                if(Properties%g == 1) F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
 
             end do
 

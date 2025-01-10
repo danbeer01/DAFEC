@@ -125,6 +125,22 @@ contains
 
             end do
 
+            if (Properties%g == 1) then
+
+                fission_source = fission_source*2.0_8*PI
+                scattered_in = scattered_in*2.0_8*PI
+                removed = removed*2.0_8*PI
+                escaped = escaped*2.0_8*PI
+
+            else if (Properties%g == 2) then
+
+                fission_source = fission_source*4.0_8*PI
+                scattered_in = scattered_in*4.0_8*PI
+                removed = removed*4.0_8*PI
+                escaped = escaped*4.0_8*PI
+
+            end if
+
             source_total = source_total + fission_source + scattered_in
             print *, "  Source Input      = ", fission_source + scattered_in
 
@@ -197,7 +213,7 @@ contains
 
                         absorption_rate(j) = absorption_rate(j) + Properties%Elements(i)%Sigma_a(k)*sum(matmul(Properties%Elements(i)%A_Matrix,Properties%Elements(i)%Flux(k,:)))
 
-                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))/Properties%Elements(i)%Number_of_Nodes
+                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))*Properties%Elements(i)%Volume/Properties%Elements(i)%Number_of_Nodes
 
                         Volume(j) = Volume(j) + Properties%Elements(i)%Volume
 
@@ -207,9 +223,19 @@ contains
 
                 end do
 
-                if (Volume(j) > 0.0_8) Mean_Flux(j) = Mean_Flux(j)/Volume(j)
-
             end do
+
+            if (Properties%g == 1) then
+
+                fission_rate = fission_rate*2.0_8*PI
+                absorption_rate = absorption_rate*2.0_8*PI
+
+            else if (Properties%g == 2) then
+
+                fission_rate = fission_rate*4.0_8*PI
+                absorption_rate = absorption_rate*4.0_8*PI
+
+            end if
 
             do j = 1, N%Material
 

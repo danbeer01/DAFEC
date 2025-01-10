@@ -1,1 +1,1 @@
-/usr/bin/f95  -Wall -ffree-line-length-none  -ffree-line-length-800 -O0 -g -pg -fcheck=bounds -fdec -DDEBUG -pg -fopenmp  CMakeFiles/out.dir/main.f90.o -o ../out  -Wl,-rpath,/home/daniel/Documents/apps/lib libsrc.a /home/daniel/Documents/apps/lib/libpetsc.so 
+/usr/bin/f95  -Wall -ffree-line-length-none  -O2 -march=native -DNDEBUG -fopenmp  CMakeFiles/out.dir/main.f90.o -o ../out  -Wl,-rpath,/home/daniel/Documents/apps/lib libsrc.a /home/daniel/Documents/apps/lib/libpetsc.so 
