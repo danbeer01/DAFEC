@@ -26,23 +26,28 @@ contains
         type(Mesh)             :: this
 
         integer :: j, k, top_right_loc
-        real :: origin(N%D)
+        real(kind = 8) :: origin(N%D)
+        real(kind = 8) :: top_right_coord(N%D)
 
         top_right_loc = 1
 
         do j = 1,N%N
             if(N%D == 1) then
-                if (this%Nodes(j,1) == Prop%Length(1)) top_right_loc = j
+                origin = [Prop%Left_B]
+                top_right_coord = [Prop%Right_B]
+                if (this%Nodes(j,1) == Prop%Right_B) top_right_loc = j
             end if
             if(N%D == 2) then
-                if (this%Nodes(j,1) == Prop%Length(1) .and. this%Nodes(j,2) == Prop%Length(2)) top_right_loc = j
+                origin = [Prop%Left_B, Prop%Bottom_B]
+                top_right_coord = [Prop%Right_B, Prop%Top_B]
+                if (this%Nodes(j,1) == Prop%Right_B .and. this%Nodes(j,2) == Prop%Top_B) top_right_loc = j
             end if
             if(N%D == 3) then
-                if (this%Nodes(j,1) == Prop%Length(1) .and. this%Nodes(j,2) == Prop%Length(2) .and. this%Nodes(j,3) == Prop%Length(3)) top_right_loc = j
+                origin = [Prop%Left_B, Prop%Bottom_B, Prop%Front_B]
+                top_right_coord = [Prop%Right_B, Prop%Top_B, Prop%Back_B]
+                if (this%Nodes(j,1) == Prop%Right_B .and. this%Nodes(j,2) == Prop%Top_B .and. this%Nodes(j,3) == Prop%Back_B) top_right_loc = j
             end if
         end do
-
-        origin = 0.0
 
         print *, "*** Response Results ***"
         print *, " "
@@ -62,7 +67,7 @@ contains
         print *, " "
         print *, "Total ", sum(Results%Scalar_Flux(:,(MAXLOC(Results%Scalar_Flux(1,:)))))
         print *, " "
-        write(*,110) " Position:" , [Prop%Length]
+        write(*,110) " Position:" , [top_right_coord]
         110 format (A,F8.4,F8.4,F8.4)
         print *, " "
         do k = 1, N%Group

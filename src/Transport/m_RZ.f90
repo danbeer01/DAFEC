@@ -38,6 +38,8 @@ module m_RZ
 
         real(kind = 8), dimension(N%Element,4,4) :: L
 
+        real(kind = 8), dimension(N%Element,4) :: S
+
         real(kind = 8), dimension(N%Group,N%Angle,N%Element,4) :: Half_Flux
 
         real(kind = 8)                      :: lambda_old = 1.1_8, lambda_new
@@ -67,7 +69,7 @@ module m_RZ
 
         call Create_Ordinate_Arrays_RZ(N, p_indices, q_indices, w_indices, mu_indices)
 
-        call Construct_RZ_Matrix(Properties, N, alpha, L, mu, w, p_indices, q_indices, w_indices, mu_indices)
+        call Construct_RZ_Matrix(Properties, N, alpha, S, L, mu, w, p_indices, q_indices, w_indices, mu_indices)
 
         iter = 0
 
@@ -104,7 +106,7 @@ module m_RZ
 
                         element_index = Sweep_Order(ang,i)
 
-                        call Up_Wind_RZ_Source(Properties, N, g_index, ang, element_index, p, q, w(w_counter), alpha, Half_Flux(g_index,p,element_index,:), L(element_index,:,:))
+                        call Up_Wind_RZ_Source(Properties, N, g_index, ang, element_index, p, q, w(w_counter), alpha, Half_Flux(g_index,p,element_index,:), S(element_index,:))
 
                         call Solve_Matrix(Properties%Elements(element_index)%K_Matrix(g_index,ang,:,:), Properties%Elements(element_index)%Total_Source(g_index,ang,:), Properties%Elements(element_index)%Flux(g_index,ang,:))
 
@@ -383,7 +385,7 @@ module m_RZ
 
     end subroutine Calculate_Half_Flux
 
-    subroutine Construct_RZ_Matrix(Properties, N, alpha, L, mu, w, p_indices, q_indices, w_indices, mu_indices)
+    subroutine Construct_RZ_Matrix(Properties, N, alpha, S, L, mu, w, p_indices, q_indices, w_indices, mu_indices)
 
         type(PropertiesType), intent(inout) :: Properties
         type(NType), intent(in)             :: N
@@ -396,11 +398,15 @@ module m_RZ
 
         real(kind = 8), dimension(:,:,:) :: L
 
+        real(kind = 8), dimension(:,:) :: S
+
         real(kind = 8), dimension(:), intent(inout) :: mu, w
 
         do i = 1, N%Element
 
             L(i,:,:) = Create_M(Properties,N,i)
+
+            S(i,:) = Create_S(Properties,N,i)
 
             do g_index = 1, N%Group
 
@@ -428,7 +434,7 @@ module m_RZ
 
     end subroutine Construct_RZ_Matrix
 
-    subroutine Up_Wind_RZ_Source(Properties, N, g_index, ang, i, p, q, w, alpha, Half_Flux, M)
+    subroutine Up_Wind_RZ_Source(Properties, N, g_index, ang, i, p, q, w, alpha, Half_Flux, S)
 
         type(PropertiesType), intent(inout) :: Properties
         type(NType), intent(in)             :: N
@@ -439,7 +445,7 @@ module m_RZ
 
         integer                             :: side_index, neighbour_element
 
-        real(kind = 8), dimension(:,:), intent(in) :: M
+        real(kind = 8), dimension(:), intent(in) :: S
 
         real(kind = 8), dimension(:,:), intent(in) :: alpha
 
@@ -471,7 +477,7 @@ module m_RZ
 
         end do
 
-        Properties%Elements(i)%Sweep_Source(g_index,ang,:) = Properties%Elements(i)%Sweep_Source(g_index,ang,:) + (alpha(p,q+1) + alpha(p,q))*(1.0_8/w)*matmul(M,Half_Flux)
+        Properties%Elements(i)%Sweep_Source(g_index,ang,:) = Properties%Elements(i)%Sweep_Source(g_index,ang,:) + (alpha(p,q+1) + alpha(p,q))*(1.0_8/w)*(S*Half_Flux)
 
         deallocate(Boundary)
 
@@ -1177,7 +1183,7 @@ module m_RZ
 
                 else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
-                    F_out(:,:) = F_out + Omega_n*Integrate_Quad_Side(Properties,N,i,side_index)
+                    F_out(:,:) = F_out + Omega_n*Integrate_Quad_Side_Half(Properties,N,i,side_index)
 
                 end if
 
@@ -1215,7 +1221,7 @@ module m_RZ
 
                     else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
-                        Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = abs(Omega_n)*Integrate_Quad_Side(Properties,N,i,side_index)
+                        Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = abs(Omega_n)*Integrate_Quad_Side_Half(Properties,N,i,side_index)
 
                     end if
 
@@ -1227,7 +1233,7 @@ module m_RZ
 
                     else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
-                        Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = abs(Omega_n)*Integrate_Quad_Side_F_in(Properties,N,i,side_index)
+                        Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = abs(Omega_n)*Integrate_Quad_Side_F_in_Half(Properties,N,i,side_index)
 
                     end if
 
@@ -1238,5 +1244,163 @@ module m_RZ
         end do
 
     end subroutine Construct_RZ_F_in_Matrix
+
+    Function Integrate_Quad_Side_Half(Properties,N,i,j) Result(F_out)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j
+        integer             :: Num_Gauss_Points, a, b, index_1, index_2, k, l, p
+        real(kind = 8), dimension(:,:), allocatable :: F_out
+        real(kind = 8), dimension(:), allocatable :: xi, w
+        integer, dimension(:), allocatable :: Nodes
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions
+        real(kind = 8), dimension(:), allocatable   :: dx_dxi, dy_dxi
+
+        allocate(F_out(Properties%Elements(i)%Number_of_Nodes,Properties%Elements(i)%Number_of_Nodes))
+
+        Num_Gauss_Points = (N%Degree+1)
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes,Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        allocate(Nodes(N%Degree+1))
+
+        call Generate_1D_Quad_Gauss_Points(Num_Gauss_Points, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        do l = 3, N%Degree+1
+            if (l == 3) then
+                Nodes(l) = 5
+            else
+                Nodes(l) = 1 + Nodes(l-1)
+            end if
+        end do
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        do l = 1, Num_Gauss_Points
+
+            do p = 1, size(Nodes)
+                k = Properties%Elements(i)%Side_Nodes(j,p)
+                Shape_Functions(k,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))
+                dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
+                dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+            end do
+
+        end do
+
+        F_out = 0.0_8
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+           do b = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(i)%Side_Nodes(j,b)
+
+                F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
+
+            end do
+
+        end do
+
+    end Function Integrate_Quad_Side_Half
+
+    Function Integrate_Quad_Side_F_in_Half(Properties,N,i,j) Result(F_in)
+
+        type(PropertiesType) :: Properties
+        type(NType)          :: N
+
+        integer, intent(in) :: i, j
+        integer             :: Num_Gauss_Points, a, b, k, k_n, l, p, temp, index_1, index_2
+
+        real(kind = 8), dimension(:,:), allocatable :: F_in
+        real(kind = 8), dimension(:), allocatable :: xi, w
+
+        integer, dimension(N%Degree+1) :: Nodes, Neighbour_Nodes
+
+        real(kind = 8), dimension(:), allocatable  :: dx_dxi, dy_dxi
+
+        real(kind = 8), dimension(:,:), allocatable :: Shape_Functions, Shape_Functions_Neighbour
+
+        allocate(F_in(Properties%Elements(i)%Number_of_Nodes,Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Number_of_Nodes))
+
+        Num_Gauss_Points = (N%Degree+1)
+
+        allocate(Shape_Functions(Properties%Elements(i)%Number_of_Nodes, Num_Gauss_Points))
+
+        allocate(Shape_Functions_Neighbour(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Number_of_Nodes, Num_Gauss_Points))
+
+        allocate(dx_dxi(Num_Gauss_Points), dy_dxi(Num_Gauss_Points))
+
+        allocate(xi(Num_Gauss_Points), w(Num_Gauss_Points))
+
+        call Generate_1D_Quad_Gauss_Points(Num_Gauss_Points, xi, w)
+
+        Nodes(1) = 1
+        Nodes(2) = 2
+        do l = 3, N%Degree+1
+            if (l == 3) then
+                Nodes(l) = 5
+            else
+                Nodes(l) = 1 + Nodes(l-1)
+            end if
+        end do
+
+        Neighbour_Nodes = Nodes
+        temp = Neighbour_Nodes(1)
+        Neighbour_Nodes(1) = Neighbour_Nodes(2)
+        Neighbour_Nodes(2) = temp
+        do l = 3, 2 + (size(Neighbour_Nodes) - 2)/2
+            temp = Neighbour_Nodes(l)
+            Neighbour_Nodes(l) = Neighbour_Nodes(size(Neighbour_Nodes) - l + 3)
+            Neighbour_Nodes(size(Neighbour_Nodes) - l + 3) = temp
+        end do
+
+        dx_dxi = 0.0_8
+        dy_dxi = 0.0_8
+
+        Shape_Functions = 0.0_8
+
+        Shape_Functions_Neighbour = 0.0_8
+
+        do l = 1, Num_Gauss_Points
+
+            do p = 1, size(Nodes)
+                k = Properties%Elements(i)%Side_Nodes(j,p)
+                Shape_Functions(k,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))
+                k_n = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),p)
+                Shape_Functions_Neighbour(k_n,l) = Generate_Quadrilateral_Shape_Functions(Properties, N%Degree, Neighbour_Nodes(p), 1.0_8, xi(l))
+                dx_dxi(l) = dx_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,1)
+                dy_dxi(l) = dy_dxi(l) + Generate_Shape_Functions_Derivative_xi(Properties, N%Degree, Nodes(p), 1.0_8, xi(l))*Properties%Elements(i)%Coordinates(k,2)
+            end do
+
+        end do
+
+        F_in = 0.0_8
+
+        do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
+
+            do b = 1, size(Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),:))
+
+                index_1 = Properties%Elements(i)%Side_Nodes(j,a)
+                index_2 = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),b)
+
+                F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
+
+            end do
+
+        end do
+
+    end Function Integrate_Quad_Side_F_in_Half
 
 end module m_RZ

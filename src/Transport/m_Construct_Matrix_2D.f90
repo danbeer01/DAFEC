@@ -110,14 +110,11 @@ contains
         real(kind=8), intent(in) :: mu, eta
         integer, intent(in)      :: i, ang
         
-        real(kind = 8) :: Omega_n, r
+        real(kind = 8) :: Omega_n
 
         integer :: side_index
 
         do side_index = 1, Properties%Elements(i)%Number_of_Sides
-
-            ! r = (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,1),1) + Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,2),1))/2.0_8
-            r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
 
             Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = 0.0_8
 
@@ -153,8 +150,6 @@ contains
 
             end if
 
-            if (Properties%g == 1) Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:) = Properties%Elements(i)%Sides(side_index)%F_in_Matrix(ang,:,:)*r
-
         end do
 
     end subroutine Construct_F_in_Matrix
@@ -169,7 +164,7 @@ contains
 
         real(kind = 8), dimension(:,:) :: F_out
 
-        real(kind = 8) :: Omega_n, r
+        real(kind = 8) :: Omega_n
 
         integer :: side_index
 
@@ -177,22 +172,17 @@ contains
 
         do side_index = 1, Properties%Elements(i)%Number_of_Sides
 
-            ! r = (Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,1),1) + Properties%Elements(i)%Coordinates(Properties%Elements(i)%Side_Nodes(side_index,2),1))/2.0_8
-            r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
-
             Omega_n = (Properties%Elements(i)%Unit_Vectors(side_index,1)*mu + Properties%Elements(i)%Unit_Vectors(side_index,2)*eta)
 
             if (Omega_n > 0) then
 
                 if (Properties%Elements(i)%Cell_Type == 5 .or. Properties%Elements(i)%Cell_Type == 22) then
 
-                    if (Properties%g == 0)F_out(:,:) = F_out + Omega_n*Integrate_Tri_Side(Properties,N,i,side_index)
-                    if (Properties%g == 1)F_out(:,:) = F_out + Omega_n*Integrate_Tri_Side(Properties,N,i,side_index)*r
+                    F_out(:,:) = F_out + Omega_n*Integrate_Tri_Side(Properties,N,i,side_index)
 
                 else if (Properties%Elements(i)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28) then
 
-                    if (Properties%g == 0)F_out(:,:) = F_out + Omega_n*Integrate_Quad_Side(Properties,N,i,side_index)
-                    if (Properties%g == 1)F_out(:,:) = F_out + Omega_n*Integrate_Quad_Side(Properties,N,i,side_index)*r
+                    F_out(:,:) = F_out + Omega_n*Integrate_Quad_Side(Properties,N,i,side_index)
 
                 end if
 

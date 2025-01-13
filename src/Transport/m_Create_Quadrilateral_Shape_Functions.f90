@@ -566,6 +566,8 @@ contains
 
         end do
 
+        r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
+
         F_out = 0.0_8
 
         do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
@@ -576,7 +578,7 @@ contains
                 index_2 = Properties%Elements(i)%Side_Nodes(j,b)
 
                 if(Properties%g == 0) F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
-                if(Properties%g == 1) F_out(index_1,index_2) = F_out(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
+                if(Properties%g == 1) F_out(index_1,index_2) = F_out(index_1,index_2) + sum(r*w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions(index_2,:))
 
             end do
 
@@ -657,6 +659,8 @@ contains
 
         end do
 
+        r = (Properties%Elements(i)%Coordinates(1,1) + Properties%Elements(i)%Coordinates(2,1) + Properties%Elements(i)%Coordinates(3,1) + Properties%Elements(i)%Coordinates(4,1))/4.0_8
+
         F_in = 0.0_8
 
         do a = 1, size(Properties%Elements(i)%Side_Nodes(j,:))
@@ -667,7 +671,7 @@ contains
                 index_2 = Properties%Elements(Properties%Elements(i)%Neighbours(j,1))%Side_Nodes(Properties%Elements(i)%Neighbours(j,2),b)
 
                 if(Properties%g == 0) F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
-                if(Properties%g == 1) F_in(index_1,index_2) = F_in(index_1,index_2) + sum(w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
+                if(Properties%g == 1) F_in(index_1,index_2) = F_in(index_1,index_2) + sum(r*w*sqrt(dx_dxi**2 + dy_dxi**2)*Shape_Functions(index_1,:)*Shape_Functions_Neighbour(index_2,:))
 
             end do
 
