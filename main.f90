@@ -46,7 +46,7 @@ call timer%Startdate()
 ! open(unit=1, file='vtk/1D/reed_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/1D/3_Region_Sphere.vtk', status='old', action='read')
 
-open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
+! open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/Tri_2.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/quad.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/O1_tri_2.vtk', status='old', action='read')
@@ -69,6 +69,7 @@ open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/square_2_2_f.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/pincell_1_2_vol_f.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/2D/pincell_2_1_FEM_vol.vtk', status='old', action='read')
+open(unit=1, file='vtk/2D/supercell_2_3_fe_vol.vtk', status='old', action='read')
 
 ! open(unit=1, file='vtk/3D/Cube.vtk', status='old', action='read')
 ! open(unit=1, file='vtk/3D/O1_cube.vtk', status='old', action='read')
@@ -88,7 +89,7 @@ open(unit=1, file='vtk/2D/Squares_100.vtk', status='old', action='read')
 call vtk_mesh%read_VTK_file()
 
 ! Open input file for material and other data data
-open(unit=1, file='inputs/homo.txt', status='old', action='read')
+! open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/hetero.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/reed.txt', status='old', action='read')
@@ -100,6 +101,7 @@ open(unit=1, file='inputs/homo.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/cylinder.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/LWR.txt', status='old', action='read')
 ! open(unit=1, file='inputs/Benchmarks/c5g7_3.txt', status='old', action='read')
+open(unit=1, file='inputs/Benchmarks/Supercell.txt', status='old', action='read')
 
 ! open(unit=1, file='inputs/Benchmarks/Takeda.txt', status='old', action='read')
 
@@ -122,10 +124,12 @@ call timer%solve()
 if(Solve_Transport_Method) then
     if(Properties%Case == 1) call neutron_balance(Properties, Results, N)
     if(Properties%Case == 1) call reaction_rate(Properties, Results, N)
+    if(Properties%Case == 0) call fixed_source_output(Properties, N)
     call print_flux(Properties, Results, N, vtk_mesh)
 else
     if(PropertiesD%Case == 1) call neutron_balance_diffusion(PropertiesD, ResultsD, N_D)
     if(PropertiesD%Case == 1) call reaction_rate_diffusion(PropertiesD, ResultsD, N_D)
+    if(PropertiesD%Case == 0) call fixed_source_output_diffusion(PropertiesD, N_D)
     call print_flux_diffusion(PropertiesD, ResultsD, N_D, vtk_mesh)
 end if
 

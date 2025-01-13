@@ -251,6 +251,62 @@ contains
 
         end do
 
-    end subroutine reaction_rate_diffusion    
+    end subroutine reaction_rate_diffusion
+
+    subroutine fixed_source_output_diffusion(Properties, N)
+
+        type(PropertiesTypeD)   :: Properties
+        type(NTypeD)            :: N
+
+        real(kind=8), dimension(N%Material) :: Volume, Mean_Flux
+
+        integer, dimension(N%Material) :: Number_of_Elements
+
+        integer :: i, j, k
+
+        print *, "Fixed Source Outputs:"
+        print *, " "
+
+        do k = 1, N%Group
+
+            Volume = 0.0_8
+            Mean_Flux = 0.0_8
+            Number_of_Elements = 0
+
+            print *, "Group", k
+            print *, " "
+
+            print *, "   Material   ", " No. of Elements", "        Volume   ", "                 Mean Flux   "
+            print *, " "
+
+            do j = 1, N%Material
+            
+                do i = 1, N%Element
+
+                    if (Properties%Elements(i)%Material == j) then
+
+                        Mean_Flux(j) = Mean_Flux(j) + sum(Properties%Elements(i)%Flux(k,:))*Properties%Elements(i)%Volume/Properties%Elements(i)%Number_of_Nodes
+
+                        Volume(j) = Volume(j) + Properties%Elements(i)%Volume
+
+                        Number_of_Elements(j) = Number_of_Elements(j) + 1
+
+                    end if
+
+                end do
+
+            end do
+
+            do j = 1, N%Material
+
+                print *, j, Number_of_Elements(j), '           ',Volume(j), Mean_Flux(j)
+
+            end do
+
+            print *, " "
+
+        end do
+
+    end subroutine fixed_source_output_diffusion
 
 end module
