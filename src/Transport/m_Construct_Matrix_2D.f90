@@ -32,17 +32,17 @@ contains
 
         call Construct_Streaming_Matrix(Properties, N, i, ang, mu, eta)
 
-        if (N%Degree == 1) then
-
-            call Construct_F_out_Matrix(Properties, N, i, mu, eta, F_out)
-
-            call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta)
-
-        else
+        if (N%Degree > 1 .and. (Properties%Elements(1)%Cell_Type == 9 .or. Properties%Elements(i)%Cell_Type == 28)) then
 
             call Construct_F_out_Matrix_C(Properties, N, i, mu, eta, F_out)
 
             call Construct_F_in_Matrix_C(Properties, N, i, ang, mu, eta)
+
+        else
+
+            call Construct_F_out_Matrix(Properties, N, i, mu, eta, F_out)
+
+            call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta)
 
         end if
 

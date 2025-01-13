@@ -34,17 +34,17 @@ contains
 
         call Construct_Streaming_Matrix(Properties, N, i, ang, mu, eta, xi)
 
-        if (N%Degree == 1) then
-
-            call Construct_F_out_Matrix(Properties, N, i, mu, eta, xi, F_out)
-
-            call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta, xi)
-
-        else
+        if (N%Degree > 1 .and. (Properties%Elements(1)%Cell_Type == 12 .or. Properties%Elements(i)%Cell_Type == 29)) then
 
             call Construct_F_out_Matrix_C(Properties, N, i, mu, eta, xi, F_out)
 
             call Construct_F_in_Matrix_C(Properties, N, i, ang, mu, eta, xi)
+
+        else
+
+            call Construct_F_out_Matrix(Properties, N, i, mu, eta, xi, F_out)
+
+            call Construct_F_in_Matrix(Properties, N, i, ang, mu, eta, xi)
 
         end if
 
